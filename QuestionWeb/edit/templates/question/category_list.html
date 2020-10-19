@@ -1,0 +1,24 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}カテゴリ一覧{% endblock %}
+{% block page_title %}カテゴリ一覧{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr><th style="width:10%">カテゴリNo.</th><th style="width:90%">カテゴリ名称</th></tr>
+            </thead>
+            {% for category in object_list %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td><a href="{% url 'question_list' category.pk %}">{{ category.name }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

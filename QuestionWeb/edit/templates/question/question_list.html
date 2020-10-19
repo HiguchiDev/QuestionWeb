@@ -1,0 +1,28 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}問題一覧{% endblock %}
+{% block page_title %}問題一覧{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr><th style="width:10%">問題No.</th><th style="width:90%">問題文</th></tr>
+            </thead>
+            {% for question in object_list %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td><a href="{% url 'question_detail' question.pk %}">{{ question.body }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+          <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">カテゴリ一覧に戻る</a>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

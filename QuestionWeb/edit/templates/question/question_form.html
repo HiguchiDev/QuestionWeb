@@ -1,0 +1,89 @@
+{% extends 'question/base.html' %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block meta_title %}問題新規作成{% endblock %}
+{% block page_title %}問題新規作成{% endblock %}
+
+{% block extrahead %}
+    <link href="{% static 'test.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="border" style="padding:10px;">
+        <form method="post" id="post_form">
+            {% csrf_token %}
+            {{ form.management_form }}
+
+            <div class="form-row">
+                <div class="form-group col-sm-1">
+                </div>
+
+                <div class="form-group col-sm-10">
+                    {{ form|crispy }}
+                </div>
+                <div class="form-group col-sm-1">
+                </div>
+            </div>
+
+            {% for inline in inlines %}
+                {{ inline.management_form }}
+                    
+                    {% for line in inline %}
+                        <div class="form-row" id="choice_row_{{ forloop.counter }}">
+                            <div class="form-group col-sm-1">
+                            </div>
+
+                            <div class="form-group col-sm-10" id="line_{{ forloop.counter }}">
+                                <div class="border" style="padding:30px;" id="border_{{ forloop.counter }}">
+                                    {{ line }}
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-1">
+                            </div>
+                        </div>
+                    {% endfor %}
+            {% endfor %}
+            <button id="choice_add_btn" type="button" class="btn btn-primary">選択肢を追加</button>
+            </div>
+            <button class="btn btn-primary" type="submit">送信</button>
+            
+        </form>
+    
+    
+  </div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+$(function(){
+ 
+    var max_choice_no = 10;
+    var min_choice_no = 3;
+    
+    for (let i = max_choice_no; i > min_choice_no; i--){
+        $('#choice_row_' + i).hide();
+    }
+    $('#id_text_choices-TOTAL_FORMS').val(min_choice_no)
+
+    $('#choice_add_btn').click(function() {
+        for (let i = 1; i <= max_choice_no; i++){
+            if($('#choice_row_' + i).is(':visible')){
+
+            }
+            else{
+                $('#choice_row_' + i).show('slow');
+                $('#id_text_choices-TOTAL_FORMS').val(i)
+                break;
+            }
+        }
+    })
+});
+
+</script>
+
+{% endblock %}

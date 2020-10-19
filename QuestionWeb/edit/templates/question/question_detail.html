@@ -1,0 +1,40 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}問題詳細{% endblock %}
+{% block page_title %}問題詳細(カテゴリ：{{ question.Category.name }}){% endblock %}
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-body">
+            <p>Q{{ question.id }}</p>
+            <p>{{ question.body|linebreaksbr }}</p>
+          </div>
+          <div class="card-footer">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr><th style="width:25%">選択肢No.</th><th style="width:75%">選択肢内容</th></tr>
+                </thead>
+            {% for text_choice in question.textchoice_set.all %}
+                <tr><td style="width:25%">{{ forloop.counter }}</td><td style="width:75%">{{ text_choice.body|linebreaksbr }}</td></tr>
+            </div>
+            {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <a class="btn btn-primary" href="{% url 'question_update' question.id %}" role="button">問題を編集する</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <a class="btn btn-primary" href="{% url 'question_list' question.Category.id %}" role="button">問題一覧に戻る</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
