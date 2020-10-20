@@ -70,6 +70,7 @@ function set_choice_no(){
 
     $("input[type='number']" + "[id^='id_textchoice_set-']").each(function(i, o){
       //コンソールにインデックス番号とテキストを出力する
+        console.log($("input[type='checkbox']" + "[id^='id_textchoice_set-0']").val());
         $(o).val(i + 1);
     });
 }
@@ -95,7 +96,6 @@ $(function(){
 
         var new_choice_html = clone_html.replace(new RegExp(formset_id, "g"), 'set-' + choice_qty); //0から始まるので、choice_qtyがそのまま新しいIDになる
         var new_choice_html = new_choice_html.replace(new RegExp(li_choice_id, "g"), 'li_choice_' + (choice_qty + 1)); //0から始まるので、choice_qtyがそのまま新しいIDになる
-        console.log(new_choice_html);
 
         $('#choice_list').append(new_choice_html);
         $('#id_textchoice_set-TOTAL_FORMS').val(choice_qty + 1);
@@ -125,7 +125,6 @@ $(function(){
     });
 
     $('.choice_list > li').each(function(i, o){
-        console.log($(o))
         $(o).find("input[type='number']").attr('readonly',true);
     });
 
