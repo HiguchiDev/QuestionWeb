@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from rest_framework import routers
+
 
 urlpatterns = [
     path('category/list/', views.CategoryList.as_view(), name='category_list'),

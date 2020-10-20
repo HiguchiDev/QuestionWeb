@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'edit.apps.EditConfig',
     'bootstrap4',           # django-bootstrap4
     'crispy_forms',
-    'rest_framework',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

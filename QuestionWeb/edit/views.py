@@ -4,8 +4,7 @@ from extra_views import CreateWithInlinesView, InlineFormSetFactory, UpdateWithI
 from question.models import Question, TextChoice, Category
 from django.urls import reverse
 from django.forms import ModelForm, inlineformset_factory, Textarea
-from rest_framework import viewsets, filters
-from .serializer import TextChoiceSerializer
+
 
 # Create your views here.
 class QuestionList(ListView):
@@ -36,6 +35,8 @@ class QuestionDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         question = context.get("object")
+        choices = question.textchoice_set.all().order_by("choice_no")
+        context["choices"] = choices
         
         return context
 
@@ -61,7 +62,7 @@ class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
     form_class = TextChoiceForm
     #initial = [{'name': 'example1'}, {'name', 'example2'}]
     #prefix = 'item-form'
-    factory_kwargs = {'extra': 10, 'max_num': None,
+    factory_kwargs = {'extra': 3, 'max_num': None,
                       'can_order': False, 'can_delete': True}
     #formset_kwargs = {'auto_id': 'my_id_%s'}
 
@@ -69,12 +70,8 @@ class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
 
     model = TextChoice
     form_class = TextChoiceForm
-    #initial = [{'name': 'example1'}, {'name', 'example2'}]
-    #prefix = 'item-form'
     factory_kwargs = {'extra': 0, 'max_num': None,
                       'can_order': False, 'can_delete': True}
-    #formset_kwargs = {'auto_id': 'my_id_%s'}
-
 
 class QuestionForm(ModelForm):
 
@@ -101,7 +98,6 @@ class QuestionCreateFormsetView(CreateWithInlinesView):
 
     def get_success_url(self):
         return reverse('question_detail', kwargs={'pk': self.object.pk})
-
 
 class QuestionUpdateFormsetView(UpdateWithInlinesView):
     model = Question

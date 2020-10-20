@@ -16,8 +16,12 @@
                 <thead class="thead-light">
                     <tr><th style="width:25%">選択肢No.</th><th style="width:75%">選択肢内容</th></tr>
                 </thead>
-            {% for text_choice in question.textchoice_set.all %}
-                <tr><td style="width:25%">{{ forloop.counter }}</td><td style="width:75%">{{ text_choice.body|linebreaksbr }}</td></tr>
+                
+            {% for text_choice in choices %}
+                <tr>
+                  <td style="width:25%">{{ text_choice.choice_no }}</td>
+                  <td style="width:75%">{{ text_choice.body|linebreaksbr }}</td>
+                </tr>
             </div>
             {% endfor %}
             </table>
