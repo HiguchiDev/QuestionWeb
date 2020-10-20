@@ -31,7 +31,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="{% url 'question_update' question.id %}" role="button">問題を編集する</a>
+        <a class="btn btn-primary" href="{% url 'question_update' question.Category.id question.id %}" role="button">問題を編集する</a>
       </div>
     </div>
     <div class="row">

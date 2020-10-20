@@ -53,6 +53,7 @@
             <button id="choice_add_btn" type="button" class="btn btn-primary">選択肢を追加</button>
             </div>
             <button class="btn btn-primary" type="submit">送信</button>
+            <a class="btn btn-primary" href="{% url 'question_list' category_id %}" role="button">キャンセル</a>
             
         </form>
     
@@ -65,19 +66,35 @@
 <script>
 
 function set_choice_no(){
-    var choice_no = 0;
-    var val = 1;
+    var choice_no = 1;
 
-    $("input[type='number']" + "[id^='id_textchoice_set-']").each(function(i, o){
+    $("[id^='li_choice_']").each(function(i, o){
+        
+
+
+        var delete_check = $(o).find("input[type='checkbox']" + "[id^='id_textchoice_set-']").prop("checked");
+
+        if( delete_check == false ){
+            $(o).find("input[type='number']" + "[id^='id_textchoice_set-']").val(choice_no);
+            choice_no++;
+        }
+        
+        /*
       //コンソールにインデックス番号とテキストを出力する
-        console.log($("input[type='checkbox']" + "[id^='id_textchoice_set-0']").val());
-        $(o).val(i + 1);
+        var delete_check = $("input[type='checkbox']" + "[id^='id_textchoice_set-" + i + "']").prop("checked");
+
+        if( delete_check == false ){
+            $(o).val(choice_no);
+            choice_no++;
+        }*/
     });
 }
 
 $(function(){
     
-
+    $(document).on('change', "input[type='checkbox']" + "[id^='id_textchoice_set-']", function(){
+        set_choice_no();
+    });
 
     $('#choice_add_btn').click(function() {
 
@@ -88,6 +105,8 @@ $(function(){
         });
         var clone = $("#choice_list > [id='li_choice_" + choice_qty + "']").clone();
 
+        clone.find("[id='id_textchoice_set-" + (choice_qty - 1) + "-body']").text("");
+
         clone_html = clone.prop('outerHTML');
 
         var latest_choice_no = choice_qty - 1; //0から始まるため
@@ -95,7 +114,7 @@ $(function(){
         var li_choice_id = 'li_choice_' + choice_qty;
 
         var new_choice_html = clone_html.replace(new RegExp(formset_id, "g"), 'set-' + choice_qty); //0から始まるので、choice_qtyがそのまま新しいIDになる
-        var new_choice_html = new_choice_html.replace(new RegExp(li_choice_id, "g"), 'li_choice_' + (choice_qty + 1)); //0から始まるので、choice_qtyがそのまま新しいIDになる
+        var new_choice_html = new_choice_html.replace(new RegExp(li_choice_id, "g"), 'li_choice_' + (choice_qty + 1));
 
         $('#choice_list').append(new_choice_html);
         $('#id_textchoice_set-TOTAL_FORMS').val(choice_qty + 1);

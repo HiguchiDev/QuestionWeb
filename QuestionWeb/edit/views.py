@@ -12,7 +12,8 @@ class QuestionList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+        context['category_id'] = self.kwargs.get('category_id')
+
         return context
 
     def get_queryset(self):
@@ -25,7 +26,7 @@ class CategoryList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         return context
 
 class QuestionDetail(DetailView):
@@ -62,8 +63,8 @@ class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
     form_class = TextChoiceForm
     #initial = [{'name': 'example1'}, {'name', 'example2'}]
     #prefix = 'item-form'
-    factory_kwargs = {'extra': 3, 'max_num': None,
-                      'can_order': False, 'can_delete': True}
+    factory_kwargs = {'extra': 2, 'max_num': None,
+                      'can_order': False, 'can_delete': False}
     #formset_kwargs = {'auto_id': 'my_id_%s'}
 
 class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
@@ -99,6 +100,12 @@ class QuestionCreateFormsetView(CreateWithInlinesView):
     def get_success_url(self):
         return reverse('question_detail', kwargs={'pk': self.object.pk})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_id'] = self.kwargs.get('category_id')
+        
+        return context
+
 class QuestionUpdateFormsetView(UpdateWithInlinesView):
     model = Question
     #fields = ("body", "category", )  # self.model の fields
@@ -109,3 +116,9 @@ class QuestionUpdateFormsetView(UpdateWithInlinesView):
 
     def get_success_url(self):
         return reverse('question_detail', kwargs={'pk': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_id'] = self.kwargs.get('category_id')
+        
+        return context
