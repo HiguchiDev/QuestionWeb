@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block meta_title %}問題{{ question_id }}{% endblock %}
+{% block page_title %}カテゴリ：{{ question.Category.name }}){% endblock %}
+{% block content %}
+
+<h1>{{ question.body }}</h1>
+
+{% for textchoice in question.textchoice_set.all %}
+    <p>{{ textchoice.choice_no }} : {{ textchoice.body }}</p>
+{% endfor %}
+
+{% endblock %}

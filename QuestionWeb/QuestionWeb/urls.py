@@ -20,4 +20,5 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('edit/', include('edit.urls')),   # ←ここを追加
+    path('', include('question.urls')),   # ←ここを追加
 ]

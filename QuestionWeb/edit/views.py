@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 from extra_views import CreateWithInlinesView, InlineFormSetFactory, UpdateWithInlinesView
+from extra_views.generic import GenericInlineFormSetView
 from question.models import Question, TextChoice, Category
 from django.urls import reverse
 from django.forms import ModelForm, inlineformset_factory, Textarea
@@ -18,7 +19,7 @@ class QuestionList(ListView):
 
     def get_queryset(self):
         categori_id = self.kwargs.get('category_id')
-        return self.model.objects.filter(Category_id=categori_id)
+        return self.model.objects.filter(Category_id=categori_id).order_by('question_no')
 
 # Create your views here.
 class CategoryList(ListView):
@@ -56,7 +57,6 @@ class TextChoiceForm(ModelForm):
             'body': Textarea(attrs={'rows':2, 'cols':1}),
         }
         
-
 class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
 
     model = TextChoice
@@ -64,7 +64,7 @@ class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
     #initial = [{'name': 'example1'}, {'name', 'example2'}]
     #prefix = 'item-form'
     factory_kwargs = {'extra': 2, 'max_num': None,
-                      'can_order': False, 'can_delete': False}
+                      'can_order': False, 'can_delete': True}
     #formset_kwargs = {'auto_id': 'my_id_%s'}
 
 class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
@@ -73,6 +73,18 @@ class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
     form_class = TextChoiceForm
     factory_kwargs = {'extra': 0, 'max_num': None,
                       'can_order': False, 'can_delete': True}
+
+
+class CategoryForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = Category
+        fields = ['name']
 
 class QuestionForm(ModelForm):
 
@@ -88,6 +100,43 @@ class QuestionForm(ModelForm):
         widgets = {
             'body': Textarea(attrs={'rows':5, 'cols':1}),
         }
+
+
+class QuestionSortForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionSortForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = Question
+        fields = ['question_no', 'body',]
+
+        widgets = {
+            'body': Textarea(attrs={'rows':2, 'cols':1}),
+        }
+
+
+class QuestionInlineFormSet(InlineFormSetFactory):
+
+    model = Question
+    form_class = QuestionSortForm
+    factory_kwargs = {'extra': 0, 'max_num': None,
+                      'can_order': False, 'can_delete': True}
+
+
+
+class QuestionSortOrDeleteFormSetView(UpdateWithInlinesView):
+    model = Category
+    
+    form_class = CategoryForm
+    inlines = [QuestionInlineFormSet, ]
+    template_name = "question/question_sort.html"
+
+    def get_success_url(self):
+        return reverse('question_list', kwargs={'category_id': self.object.pk})
+
 
 class QuestionCreateFormsetView(CreateWithInlinesView):
     model = Question

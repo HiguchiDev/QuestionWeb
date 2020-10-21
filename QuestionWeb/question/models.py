@@ -10,6 +10,7 @@ class Category(models.Model):
 class Question(models.Model):
     body = models.CharField('本文', max_length=1024)
     Category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
+    question_no = models.PositiveSmallIntegerField(verbose_name='問題No.', default=0)
 
     def __str__(self):
         return self.body

@@ -8,4 +8,5 @@ urlpatterns = [
     path('detail/<int:pk>/', views.QuestionDetail.as_view(), name='question_detail'),
     path('create/<int:category_id>', views.QuestionCreateFormsetView.as_view(), name='question_create'),
     path('update/<int:category_id>/<int:pk>', views.QuestionUpdateFormsetView.as_view(), name='question_update'),
+    path('question/sort_delete/<int:pk>/', views.QuestionSortOrDeleteFormSetView.as_view(), name='question_delete_sort'),
 ]

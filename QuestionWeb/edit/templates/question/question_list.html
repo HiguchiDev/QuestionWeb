@@ -11,7 +11,7 @@
             </thead>
             {% for question in object_list %}
             <tr>
-                <td>{{ question.id }}</td>
+                <td>{{ question.question_no }}</td>
                 <td><a href="{% url 'question_detail' question.pk %}">{{ question.body }}</a></td>
             </tr>
             {% endfor %}
@@ -21,6 +21,7 @@
     <div class="row">
         <div class="col-12">
           <a class="btn btn-primary" href="{% url 'question_create' category_id %}" role="button">問題新規作成</a>
+          <a class="btn btn-primary" href="{% url 'question_delete_sort' category_id %}" role="button">問題削除・並べ替え</a>
           <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">カテゴリ一覧に戻る</a>
         </div>
       </div>
