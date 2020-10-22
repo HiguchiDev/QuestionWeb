@@ -59,7 +59,8 @@ class QuestionDetail(LoginRequiredMixin, DetailView):
         context["choices"] = choices
         context["category_id"] = self.kwargs.get('category_id')
         
-        context["category_name"] = Category.objects.get(pk=self.kwargs.get('category_id')).name
+        if self.kwargs.get('category_id'):
+            context["category_name"] = Category.objects.get(pk=self.kwargs.get('category_id')).name
         
         return context
 
