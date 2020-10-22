@@ -10,17 +10,19 @@
           <div class="card-body">
             <p>Q{{ question.question_no }}</p>
             <p>{{ question.body|linebreaksbr }}</p>
+            <p>正解：{{ question.answer_choice_no }}</p>
           </div>
           <div class="card-footer">
             <table class="table table-bordered">
                 <thead class="thead-light">
-                    <tr><th style="width:25%">選択肢No.</th><th style="width:75%">選択肢内容</th></tr>
+                    <tr><th style="width:10%">選択肢No.</th><th style="width:45%">選択肢内容（漢字）</th><th style="width:45%">選択肢内容（ひらがな）</th></tr>
                 </thead>
                 
             {% for text_choice in choices %}
                 <tr>
-                  <td style="width:25%">{{ text_choice.choice_no }}</td>
-                  <td style="width:75%">{{ text_choice.body|linebreaksbr }}</td>
+                  <td style="width:10%">{{ text_choice.choice_no }}</td>
+                  <td style="width:45%">{{ text_choice.body|linebreaksbr }}</td>
+                  <td style="width:45%">{{ text_choice.body_kana|linebreaksbr }}</td>
                 </tr>
             </div>
             {% endfor %}

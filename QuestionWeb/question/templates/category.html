@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block meta_title %}カテゴリ一覧{% endblock %}
+{% block page_title %}カテゴリ一覧{% endblock %}
+{% block content %}
+
+{{ question.body }}
+
+{% for category in category_list %}
+    <p><a href="{% url 'question' category.id 1 %}">{{ category.name }}</a></p>
+{% endfor %}
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(function(){
+        $('#decision_btn').click(function() {
+            location.href("https://techacademy.jp/");
+        });
+    });
+</script>
+{% endblock %}

@@ -11,7 +11,7 @@
             </thead>
             {% for category in object_list %}
             <tr>
-                <td>{{ category.id }}</td>
+                <td>{{ category.category_no }}</td>
                 <td><a href="{% url 'question_list' category.pk %}">{{ category.name }}</a></td>
             </tr>
             {% endfor %}

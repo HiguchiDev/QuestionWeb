@@ -1,12 +1,45 @@
 {% extends "base.html" %}
-{% block meta_title %}問題{{ question_id }}{% endblock %}
-{% block page_title %}カテゴリ：{{ question.Category.name }}){% endblock %}
+{% block meta_title %}問題{{ question.question_no }}{% endblock %}
+{% block page_title %}カテゴリ：{{ question.Category.name }}{% endblock %}
 {% block content %}
 
-<h1>{{ question.body }}</h1>
+{{ question.body }}
 
 {% for textchoice in question.textchoice_set.all %}
-    <p>{{ textchoice.choice_no }} : {{ textchoice.body }}</p>
+    <p><button type="button" class="choice_btn btn bg-white" id="choice_btn_{{ textchoice.choice_no }}" name="{{ textchoice.choice_no }}" >{{ textchoice.choice_no }} : {{ textchoice.body }}</button></p>
 {% endfor %}
 
+<button id="decision_btn" type="button" class="btn btn-success">けってい</button>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(function(){
+        var next_url = "{% url 'answer_result' question.Category.id question.question_no 99999 %}"
+
+        $('#decision_btn').click(function() {
+            
+            location.href = next_url;
+        });
+
+        $('.choice_btn').click(function() {
+            $(this).addClass("bg-secoundary");
+            $(this).removeClass("bg-white");
+
+            var clicked_btn = $(this)
+
+            $(".choice_btn").each(function(i, o){
+                if ($(o).attr('id') != clicked_btn.attr('id')){
+                    $(o).addClass("bg-white");
+                    $(o).removeClass("bg-secoundary");
+                }
+            });
+
+            next_url = "{% url 'answer_result' question.Category.id question.question_no 99999 %}"
+            next_url = next_url.replace("99999", $(this).attr('name'));
+            //console.log(next_url);
+        });
+    });
+</script>
 {% endblock %}
