@@ -1,4 +1,6 @@
 {% extends "question/question_form.html" %}
+{% block meta_title %}管理画面|問題新規作成{% endblock %}
+{% block page_title %}管理画面|問題新規作成{% endblock %}
 {% block js %}
 <script>
 $(function(){
@@ -9,11 +11,14 @@ $(function(){
     $('#id_Category').prop('disabled', true);
 
     $('#post_form').submit(function() {
-        console.log("aaa");
         $('#id_Category').prop('disabled', false);
         
         return true;
     });
+
+    $("#id_question_no").val({{ new_question_no }});
+    $("#id_question_no").attr('readonly',true);
+
 });
 </script>
 

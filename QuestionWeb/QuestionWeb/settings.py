@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'question.apps.QuestionConfig',
     'edit.apps.EditConfig',
+    'accounts.apps.AccountsConfig', #追加
     'bootstrap4',           # django-bootstrap4
     'crispy_forms',
 ]
@@ -129,3 +130,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+LOGOUT_REDIRECT_URL='/'  #任意の行に追加

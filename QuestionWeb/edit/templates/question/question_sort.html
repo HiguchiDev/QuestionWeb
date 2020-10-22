@@ -3,8 +3,8 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block meta_title %}問題並べ替え{% endblock %}
-{% block page_title %}問題並べ替え{% endblock %}
+{% block meta_title %}管理画面|問題並べ替え{% endblock %}
+{% block page_title %}管理画面|問題並べ替え{% endblock %}
 
 {% block extrahead %}
     <link href="{% static 'test.css' %}" rel="stylesheet">
@@ -84,24 +84,7 @@ $(function(){
 
     $(document).on('change', "input[type='checkbox']" + "[id^='id_question_set-']", function() {
         if($(this).prop("checked")){
-
-            var enable_question_qty = 0;
-            $("#question_list > li").each(function(i, o){
-                if($(o).find("input[type='checkbox']").prop("checked") === false){
-                    enable_question_qty++;    
-                }
-                
-            });
-
-            if(enable_question_qty < 2){
-                $(this).removeAttr('checked').prop('checked', false).change();
-                alert("選択肢は最低でも2つ必要です。");
-            }
-            else{
-                $(this).parent().addClass("bg-secondary");
-            }
-
-            //bg-secondary
+            $(this).parent().addClass("bg-secondary");
         }
         else{
             $(this).parent().removeClass("bg-secondary");

@@ -5,10 +5,17 @@ from extra_views.generic import GenericInlineFormSetView
 from question.models import Question, TextChoice, Category
 from django.urls import reverse
 from django.forms import ModelForm, inlineformset_factory, Textarea
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required(login_url = '/accounts/login/')) #ここがかわった
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 # Create your views here.
-class QuestionList(ListView):
+class QuestionList(LoginRequiredMixin, ListView):
     model = Question
 
     def get_context_data(self, **kwargs):
@@ -21,8 +28,9 @@ class QuestionList(ListView):
         categori_id = self.kwargs.get('category_id')
         return self.model.objects.filter(Category_id=categori_id).order_by('question_no')
 
+
 # Create your views here.
-class CategoryList(ListView):
+class CategoryList(LoginRequiredMixin, ListView):
     model = Category
 
     def get_context_data(self, **kwargs):
@@ -30,7 +38,9 @@ class CategoryList(ListView):
 
         return context
 
-class QuestionDetail(DetailView):
+
+
+class QuestionDetail(LoginRequiredMixin, DetailView):
     model = Question
     #queryset = Question.objects.select_related('Category', 'TextChoice').all()
 
@@ -57,6 +67,7 @@ class TextChoiceForm(ModelForm):
             'body': Textarea(attrs={'rows':2, 'cols':1}),
         }
         
+
 class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
 
     model = TextChoice
@@ -66,6 +77,7 @@ class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
     factory_kwargs = {'extra': 2, 'max_num': None,
                       'can_order': False, 'can_delete': True}
     #formset_kwargs = {'auto_id': 'my_id_%s'}
+
 
 class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
 
@@ -86,6 +98,7 @@ class CategoryForm(ModelForm):
         model = Category
         fields = ['name']
 
+
 class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -96,6 +109,22 @@ class QuestionForm(ModelForm):
     class Meta:
         model = Question
         fields = ['body', 'Category']
+
+        widgets = {
+            'body': Textarea(attrs={'rows':5, 'cols':1}),
+        }
+
+
+class QuestionCreateForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionCreateForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = Question
+        fields = ['question_no', 'body', 'Category']
 
         widgets = {
             'body': Textarea(attrs={'rows':5, 'cols':1}),
@@ -126,8 +155,7 @@ class QuestionInlineFormSet(InlineFormSetFactory):
                       'can_order': False, 'can_delete': True}
 
 
-
-class QuestionSortOrDeleteFormSetView(UpdateWithInlinesView):
+class QuestionSortOrDeleteFormSetView(LoginRequiredMixin, UpdateWithInlinesView):
     model = Category
     
     form_class = CategoryForm
@@ -138,10 +166,10 @@ class QuestionSortOrDeleteFormSetView(UpdateWithInlinesView):
         return reverse('question_list', kwargs={'category_id': self.object.pk})
 
 
-class QuestionCreateFormsetView(CreateWithInlinesView):
+class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     model = Question
     #fields = ("body", "category", )  # self.model の fields
-    form_class = QuestionForm
+    form_class = QuestionCreateForm
 
     inlines = [TextChoiceInlineFormSetForCreate, ]
     template_name = "question/question_create_form.html"
@@ -152,10 +180,12 @@ class QuestionCreateFormsetView(CreateWithInlinesView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_id'] = self.kwargs.get('category_id')
+        context['new_question_no'] = Question.objects.filter(Category_id=self.kwargs.get('category_id')).count() + 1
         
         return context
 
-class QuestionUpdateFormsetView(UpdateWithInlinesView):
+
+class QuestionUpdateFormsetView(LoginRequiredMixin, UpdateWithInlinesView):
     model = Question
     #fields = ("body", "category", )  # self.model の fields
     form_class = QuestionForm

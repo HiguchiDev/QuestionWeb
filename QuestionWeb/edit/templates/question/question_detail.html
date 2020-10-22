@@ -1,6 +1,6 @@
 {% extends 'question/base.html' %}
-{% block meta_title %}問題詳細{% endblock %}
-{% block page_title %}問題詳細(カテゴリ：{{ question.Category.name }}){% endblock %}
+{% block meta_title %}管理画面|問題詳細{% endblock %}
+{% block page_title %}管理画面|問題詳細(カテゴリ：{{ question.Category.name }}){% endblock %}
 {% block content %}
 
   <div class="container">
@@ -8,7 +8,7 @@
       <div class="col-12">
         <div class="card card-default">
           <div class="card-body">
-            <p>Q{{ question.id }}</p>
+            <p>Q{{ question.question_no }}</p>
             <p>{{ question.body|linebreaksbr }}</p>
           </div>
           <div class="card-footer">

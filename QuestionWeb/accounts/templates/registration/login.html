@@ -1,0 +1,28 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="ja-JP" >
+<head>
+    <title>ログイン</title>
+</head>
+
+<body class=" login" data-admin-utc-offset="32400">
+<div id="container">
+    <div class="form-row">
+      <div class="form-group col-sm-4"></div>
+
+      <div class="form-group col-sm-4">
+        <p>管理画面ログイン</p>
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          {% bootstrap_form form layout='horizontal' %}
+          <input type="submit" class="btn btn-primary btn-block" value="ログイン" />
+          <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+      </div>
+      <div class="form-group col-sm-4"></div>
+    </div>
+</div>  <!-- END Container -->
+
+
+</body>
+</html>

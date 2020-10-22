@@ -18,7 +18,9 @@ from django.urls import path, include
 from django.conf.urls import url, include
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')), #  追加
+    path('', include('accounts.urls')), #"追加"
     path('admin/', admin.site.urls),
     path('edit/', include('edit.urls')),   # ←ここを追加
-    path('', include('question.urls')),   # ←ここを追加
+    path('question', include('question.urls')),   # ←ここを追加
 ]
