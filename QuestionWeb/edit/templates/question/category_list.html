@@ -12,10 +12,13 @@
             {% for category in object_list %}
             <tr>
                 <td>{{ category.category_no }}</td>
-                <td><a href="{% url 'question_list' category.pk %}">{{ category.name }}</a></td>
+                <td><a href="{% url 'category_question_list' category.pk %}">{{ category.name }}</a></td>
+                
             </tr>
             {% endfor %}
         </table>
+        <a class="btn btn-primary" href="{% url 'question_create' %}" role="button">問題新規作成</a>
+        <a class="btn btn-primary" href="{% url 'question_list' %}" role="button">問題一覧</a>
       </div>
     </div>
 </div>

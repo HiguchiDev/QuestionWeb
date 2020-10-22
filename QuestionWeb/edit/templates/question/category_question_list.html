@@ -1,6 +1,6 @@
 {% extends 'question/base.html' %}
-{% block meta_title %}管理画面|問題一覧{% endblock %}
-{% block page_title %}管理画面|問題一覧{% endblock %}
+{% block meta_title %}管理画面|カテゴリ：{{ category.name }}の問題一覧{% endblock %}
+{% block page_title %}管理画面|カテゴリ：{{ category.name }}の問題一覧{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -11,7 +11,7 @@
             </thead>
             {% for question in object_list %}
             <tr>
-                <td><a href="{% url 'question_detail' question.pk %}">{{ question.body }}</a></td>
+                <td><a href="{% url 'question_detail' category.pk question.pk %}">{{ question.body }}</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-          <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">管理トップに戻る</a>
+          <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">カテゴリ一覧に戻る</a>
         </div>
       </div>
 </div>

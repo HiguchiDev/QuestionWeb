@@ -14,23 +14,27 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
-# Create your views here.
-class QuestionList(LoginRequiredMixin, ListView):
+class CategoryQuestionList(LoginRequiredMixin, ListView):
     model = Question
+    template_name = "question/category_question_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_no = Category.objects.filter(pk=self.kwargs.get('category_id'))[0].category_no
+        category = Category.objects.get(pk=self.kwargs.get('category_id'))
 
-        context['category_no'] = category_no
-        context['category_id'] = self.kwargs.get('category_id')
-
+        context['category'] = category
 
         return context
 
     def get_queryset(self):
         category_id = self.kwargs.get('category_id')
-        return self.model.objects.filter(Category_id=category_id).order_by('question_no')
+        category = Category.objects.get(pk=category_id)
+        
+        return category.question_set.all()
+
+# Create your views here.
+class QuestionList(LoginRequiredMixin, ListView):
+    model = Question
 
 
 # Create your views here.
@@ -53,6 +57,9 @@ class QuestionDetail(LoginRequiredMixin, DetailView):
         question = context.get("object")
         choices = question.textchoice_set.all().order_by("choice_no")
         context["choices"] = choices
+        context["category_id"] = self.kwargs.get('category_id')
+        
+        context["category_name"] = Category.objects.get(pk=self.kwargs.get('category_id')).name
         
         return context
 
@@ -92,18 +99,6 @@ class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
                       'can_order': False, 'can_delete': True}
 
 
-class CategoryForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(CategoryForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
-
-    class Meta:
-        model = Category
-        fields = ['name']
-
-
 class QuestionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -130,10 +125,11 @@ class QuestionCreateForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['question_no', 'body', 'Category']
+        fields = ['body', 'body_kana', 'Category']
 
         widgets = {
             'body': Textarea(attrs={'rows':5, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
         }
 
 
@@ -161,17 +157,6 @@ class QuestionInlineFormSet(InlineFormSetFactory):
                       'can_order': False, 'can_delete': True}
 
 
-class QuestionSortOrDeleteFormSetView(LoginRequiredMixin, UpdateWithInlinesView):
-    model = Category
-    
-    form_class = CategoryForm
-    inlines = [QuestionInlineFormSet, ]
-    template_name = "question/question_sort.html"
-
-    def get_success_url(self):
-        return reverse('question_list', kwargs={'category_id': self.object.pk})
-
-
 class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     model = Question
     #fields = ("body", "category", )  # self.model の fields
@@ -186,7 +171,6 @@ class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_id'] = self.kwargs.get('category_id')
-        context['new_question_no'] = Question.objects.filter(Category_id=self.kwargs.get('category_id')).count() + 1
         
         return context
 

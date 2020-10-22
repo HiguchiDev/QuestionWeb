@@ -7,18 +7,6 @@ $(function(){
  
     set_choice_no();
 
-    $('#id_Category').val({{ category_id }});
-    $('#id_Category').prop('disabled', true);
-
-    $('#post_form').submit(function() {
-        $('#id_Category').prop('disabled', false);
-        
-        return true;
-    });
-
-    $("#id_question_no").val({{ new_question_no }});
-    $("#id_question_no").attr('readonly',true);
-
 });
 </script>
 

@@ -11,7 +11,7 @@ class Category(models.Model):
 class Question(models.Model):
     body = models.CharField('本文（漢字）', max_length=1024)
     body_kana = models.CharField('本文（ひらがな）', max_length=1024, default="")
-    Category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
+    Category = models.ManyToManyField(Category)
     question_no = models.PositiveSmallIntegerField(verbose_name='問題No.', default=0)
     answer_choice_no = models.PositiveSmallIntegerField(verbose_name='正解No.', default=1)
 
