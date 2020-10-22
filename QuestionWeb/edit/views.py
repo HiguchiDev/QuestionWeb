@@ -13,13 +13,17 @@ class QuestionList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        category_no = Category.objects.filter(pk=self.kwargs.get('category_id'))[0].category_no
+
+        context['category_no'] = category_no
         context['category_id'] = self.kwargs.get('category_id')
+
 
         return context
 
     def get_queryset(self):
-        categori_id = self.kwargs.get('category_id')
-        return self.model.objects.filter(Category_id=categori_id).order_by('question_no')
+        category_id = self.kwargs.get('category_id')
+        return self.model.objects.filter(Category_id=category_id).order_by('question_no')
 
 # Create your views here.
 class CategoryList(ListView):
@@ -52,9 +56,10 @@ class TextChoiceForm(ModelForm):
 
     class Meta:
         model = TextChoice
-        fields = ("choice_no", "body")
+        fields = ("choice_no", "body", "body_kana")
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
         }
         
 class TextChoiceInlineFormSetForCreate(InlineFormSetFactory):
@@ -95,10 +100,11 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['body', 'Category']
+        fields = ['body', "body_kana", 'Category', 'answer_choice_no',]
 
         widgets = {
             'body': Textarea(attrs={'rows':5, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
         }
 
 

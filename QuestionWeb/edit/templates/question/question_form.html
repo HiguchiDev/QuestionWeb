@@ -164,7 +164,21 @@ $(function(){
     $('#choice_list').html(b);
     $('#choice_list').append(a);
 
-    
+    $('#post_form').submit(function(){
+        var choice_qty = 0;
+
+        $("#choice_list > li").each(function(i, o){
+            choice_qty++;
+        });
+
+        answer_choice_no = $("#id_answer_choice_no").val();
+
+        if( answer_choice_no > choice_qty){
+            alert("正解Noに該当する選択肢がありません。");
+            return false;
+        }
+        return true;
+    });
 });
 
 </script>
