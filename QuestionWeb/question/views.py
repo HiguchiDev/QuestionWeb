@@ -13,6 +13,7 @@ class QuestionView(TemplateView):
         category = Category.objects.get(pk=self.kwargs.get('category_id'))
         question = category.question_set.filter(question_no=self.kwargs.get('question_no'))
 
+        
         ctx['question'] = question[0] # 基本一つしか取れないはず。
         ctx['choice_list'] = question[0].textchoice_set.all().order_by('choice_no')
 

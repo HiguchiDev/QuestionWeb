@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('accounts.urls')), #"追加"
     path('admin/', admin.site.urls),
     path('edit/', include('edit.urls')),   # ←ここを追加
-    path('question', include('question.urls')),   # ←ここを追加
+    path('question/', include('question.urls')),   # ←ここを追加
 ]

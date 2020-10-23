@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView, DeleteView
 from extra_views import CreateWithInlinesView, InlineFormSetFactory, UpdateWithInlinesView
 from extra_views.generic import GenericInlineFormSetView
 from question.models import Question, TextChoice, Category
@@ -7,6 +7,9 @@ from django.urls import reverse
 from django.forms import ModelForm, inlineformset_factory, Textarea
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import HttpResponse
+from django.shortcuts import redirect
+
 
 class LoginRequiredMixin(object):
     @method_decorator(login_required(login_url = '/accounts/login/')) #ここがかわった
@@ -77,7 +80,7 @@ class TextChoiceForm(ModelForm):
         fields = ("choice_no", "body", "body_kana")
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
-            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
         }
         
 
@@ -112,8 +115,8 @@ class QuestionForm(ModelForm):
         fields = ['body', "body_kana", 'Category', 'answer_choice_no',]
 
         widgets = {
-            'body': Textarea(attrs={'rows':5, 'cols':1}),
-            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
+            'body': Textarea(attrs={'rows':2, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
         }
 
 
@@ -129,33 +132,9 @@ class QuestionCreateForm(ModelForm):
         fields = ['body', 'body_kana', 'Category']
 
         widgets = {
-            'body': Textarea(attrs={'rows':5, 'cols':1}),
-            'body_kana': Textarea(attrs={'rows':5, 'cols':1}),
-        }
-
-
-class QuestionSortForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(QuestionSortForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
-
-    class Meta:
-        model = Question
-        fields = ['question_no', 'body',]
-
-        widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
+            'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
         }
-
-
-class QuestionInlineFormSet(InlineFormSetFactory):
-
-    model = Question
-    form_class = QuestionSortForm
-    factory_kwargs = {'extra': 0, 'max_num': None,
-                      'can_order': False, 'can_delete': True}
 
 
 class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
@@ -192,3 +171,65 @@ class QuestionUpdateFormsetView(LoginRequiredMixin, UpdateWithInlinesView):
         context['category_id'] = self.kwargs.get('category_id')
         
         return context
+
+
+class QuestionDeleteView(DeleteView):
+    template_name = 'question/question_delete.html'
+    model = Question
+
+    def get_success_url(self):
+        return reverse('question_list')
+
+
+class QuestionAddView(TemplateView):
+    template_name = 'question/question_add.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(pk=self.kwargs.get('category_id'))
+        category_question_id_list = category.question_set.values_list('id', flat=True)
+        not_exists_question_list = []
+
+        all_question = Question.objects.all()
+
+        for question in all_question:
+            if question.id not in category_question_id_list:
+                not_exists_question_list.append(question)
+
+        context['category'] = category
+        context['question_list'] = not_exists_question_list
+        context['add_result'] = self.kwargs.get('add_result')
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        
+        category = Category.objects.get(pk=request.POST['category_id'])
+        question = Question.objects.get(pk=request.POST['question_id'])
+
+        question.Category.add(category)
+
+        return redirect('/edit/question/add/' + request.POST['category_id'] + '/success')
+ 
+ 
+class QuestionExclusionView(TemplateView):
+    template_name = 'question/question_exclusion.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(pk=self.kwargs.get('category_id'))
+
+        context['category'] = category
+        context['question_list'] = category.question_set.all()
+        context['exclusion_result'] = self.kwargs.get('exclusion_result')
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        
+        category = Category.objects.get(pk=request.POST['category_id'])
+        question = Question.objects.get(pk=request.POST['question_id'])
+
+        question.Category.remove(category)
+
+        return redirect('/edit/question/exclusion/' + request.POST['category_id'] + '/success')

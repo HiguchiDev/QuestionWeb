@@ -10,4 +10,9 @@ urlpatterns = [
     path('detail/<int:category_id>/<int:pk>/', views.QuestionDetail.as_view(), name='question_detail'),
     path('create/', views.QuestionCreateFormsetView.as_view(), name='question_create'),
     path('update/<int:pk>', views.QuestionUpdateFormsetView.as_view(), name='question_update'),
+    path('delete/<int:pk>', views.QuestionDeleteView.as_view(), name='question_delete'),
+    path('question/add/<int:category_id>', views.QuestionAddView.as_view(), name='question_add'),
+    path('question/add/<int:category_id>/<str:add_result>', views.QuestionAddView.as_view(), name='question_add'),
+    path('question/exclusion/<int:category_id>', views.QuestionExclusionView.as_view(), name='question_exclusion'),
+    path('question/exclusion/<int:category_id>/<str:exclusion_result>', views.QuestionExclusionView.as_view(), name='question_exclusion'),
 ]

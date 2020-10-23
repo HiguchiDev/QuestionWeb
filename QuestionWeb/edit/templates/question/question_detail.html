@@ -8,7 +8,6 @@
       <div class="col-12">
         <div class="card card-default">
           <div class="card-body">
-            <p>Q{{ question.question_no }}</p>
             <p>{{ question.body|linebreaksbr }}</p>
             <p>正解：{{ question.answer_choice_no }}</p>
           </div>
@@ -33,20 +32,12 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <a class="btn btn-primary" href="{% url 'question_update' question.id %}" role="button">問題を編集する</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
         {% if category_id %}
           <a class="btn btn-primary" href="{% url 'category_question_list' category_id %}" role="button">{{ category_name }}の問題一覧に戻る</a>
         {% else %}
           <a class="btn btn-primary" href="{% url 'question_list' %}" role="button">問題一覧に戻る</a>
         {% endif %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
+        <a class="btn btn-primary" href="{% url 'question_update' question.id %}" role="button">問題を編集する</a>
         <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">管理トップに戻る</a>
       </div>
     </div>

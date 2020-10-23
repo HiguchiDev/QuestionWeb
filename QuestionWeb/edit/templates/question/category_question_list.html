@@ -20,6 +20,8 @@
     <div class="row">
         <div class="col-12">
           <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">カテゴリ一覧に戻る</a>
+          <a class="btn btn-primary" href="{% url 'question_add' category.pk %}" role="button">このカテゴリに問題を追加</a>
+          <a class="btn btn-danger" href="{% url 'question_exclusion' category.pk %}" role="button">このカテゴリから問題を除外</a>
         </div>
       </div>
 </div>

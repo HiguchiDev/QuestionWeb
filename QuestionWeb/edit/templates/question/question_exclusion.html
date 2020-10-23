@@ -1,0 +1,47 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}管理画面|{{ category.name }}|問題除外{% endblock %}
+{% block page_title %}管理画面|{{ category.name }}|問題除外{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <br>
+        {% if exclusion_result == 'success' %}
+          <h3><font color="red">カテゴリ：{{ category.name }}から1件除外しました。</font></h3>
+          <br>
+        {% endif %}
+        <h3>【カテゴリ：{{ category.name }}の問題一覧】</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                  <th style="width:80%">問題文</th>
+                  <th style="width:20%">除外ボタン</th>
+                </tr>
+            </thead>
+            {% for question in question_list %}
+            <tr>
+                <td>{{ question.body }}</td>
+                <td>
+                  <form action="{% url 'question_exclusion' category.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="category_id" value={{ category.pk }}>
+                    <input type="hidden" name="question_id" value={{ question.pk }}>
+                    <input type="submit" class="btn btn-danger" value="除外"></a>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+
+        
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+          <a class="btn btn-primary" href="{% url 'category_question_list' category.pk %}" role="button">{{ category.name }}の問題一覧に戻る</a>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

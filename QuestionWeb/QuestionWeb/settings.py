@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig', #追加
     'bootstrap4',           # django-bootstrap4
     'crispy_forms',
+    'django.contrib.sessions.middleware.SessionMiddleware',  # セッション機能の有効化
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
