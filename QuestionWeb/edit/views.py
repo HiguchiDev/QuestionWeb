@@ -129,7 +129,7 @@ class QuestionCreateForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['body', 'body_kana', 'Category']
+        fields = ['body', 'body_kana', 'Category', 'answer_choice_no',]
 
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
