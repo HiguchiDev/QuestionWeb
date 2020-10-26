@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block meta_title %}問題{{ question.question_no }}{% endblock %}
-{% block page_title %}カテゴリ：{{ question.Category.name }}{% endblock %}
+{% block meta_title %}Q{{ question_no }}{% endblock %}
+{% block page_title %}カテゴリ：{{ category.name }}{% endblock %}
 {% block content %}
 
 {{ question.body }}
@@ -16,7 +16,7 @@
 {% block js %}
 <script>
     $(function(){
-        var next_url = "{% url 'answer_result' question.Category.id question.question_no 99999 %}"
+        var next_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
 
         $('#decision_btn').click(function() {
             
@@ -36,7 +36,7 @@
                 }
             });
 
-            next_url = "{% url 'answer_result' question.Category.id question.question_no 99999 %}"
+            next_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
             next_url = next_url.replace("99999", $(this).attr('name'));
             //console.log(next_url);
         });

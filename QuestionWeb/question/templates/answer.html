@@ -18,7 +18,7 @@
 <script>
     $(function(){
         $('#next_btn').click(function() {
-            location.href = "{% url 'question' question.Category.id question.question_no|add:"1" %}";
+            location.href = "{% url 'question' category_id question_no|add:"1" %}";
         });
     });
 </script>
