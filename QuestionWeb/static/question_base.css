@@ -1,0 +1,20 @@
+#site_icon {
+    margin-top : 5px;
+    margin-bottom : 5px;
+}
+
+#site_name {
+    margin-top : 10px;
+    padding: 0px;
+
+}
+
+#site_sub_name {
+    font-size: x-small ;
+
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    }

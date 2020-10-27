@@ -16,6 +16,7 @@ class QuestionView(TemplateView):
         
         question_no = kwargs.get('question_no')
 
+        # セッション切れチェック
         if question_no != 1 and not self.request.session.get('question_id_list', False):
             return HttpResponseRedirect(reverse('session_expire'))
 

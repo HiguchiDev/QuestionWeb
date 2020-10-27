@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html>
 <head>
@@ -11,7 +13,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <title>{% block meta_title %}{% endblock %}</title>
 <body>
-
+<link href="{% static 'question_base.css' %}" rel="stylesheet">
 {% if messages %}
   {# Django のメッセージに記録している内容があればここで表示 #}
   <div class="container">
@@ -29,6 +31,32 @@
     </div>
   </div>
 {% endif %}
+
+<header>
+  <div class="container-fluid">
+    <div class="row">
+        <img src="{% static "header_bar.png" %}" alt="" class="img-fluid">
+    </div>
+    <div class="row" >
+      <div class="col-2"></div>
+      <div class="col-2">
+        <div class="float-right" id="site_icon">
+          <img src="{% static "site_icon.png" %}" alt="" class="img-fluid">
+        </div>
+      </div>
+      <div class="col-6" id="site_name">
+        <b>QutyPie-Quiz</b><br>
+        <div class="row">
+          <div class="col-12">
+            <div class="float-left" id="site_sub_name">
+              プリンセスの知育クイズ
+            </div>
+          </div>
+        </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+</header>
 
 <div class="container">
   <div class="row">
