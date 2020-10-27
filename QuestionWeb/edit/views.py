@@ -112,35 +112,19 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['body', "body_kana", 'Category', 'answer_choice_no',]
+        fields = ['body', "body_kana", 'Category', 'answer_choice_no', 'comment']
 
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
             'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
-        }
-
-
-class QuestionCreateForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(QuestionCreateForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
-
-    class Meta:
-        model = Question
-        fields = ['body', 'body_kana', 'Category', 'answer_choice_no',]
-
-        widgets = {
-            'body': Textarea(attrs={'rows':2, 'cols':1}),
-            'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
+            'comment': Textarea(attrs={'rows':2, 'cols':1}),
         }
 
 
 class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     model = Question
     #fields = ("body", "category", )  # self.model の fields
-    form_class = QuestionCreateForm
+    form_class = QuestionForm
 
     inlines = [TextChoiceInlineFormSetForCreate, ]
     template_name = "question/question_create_form.html"

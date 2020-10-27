@@ -2,24 +2,37 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from question.models import Question, TextChoice, Category
 import random
+from django.http import HttpResponseRedirect
+from django.shortcuts import reverse
 
 # Create your views here.
+
+QUESTION_MAX_QTY = 5
 
 class QuestionView(TemplateView):
     template_name = "question.html"
 
+    def get(self, request, **kwargs):
+        
+        question_no = kwargs.get('question_no')
+
+        if question_no != 1 and not self.request.session.get('question_id_list', False):
+            return HttpResponseRedirect(reverse('session_expire'))
+
+        #ToDo : 紐づく問題が5問以下の場合はエラーとする。
+
+        return super().get(request, **kwargs)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        
 
         random_question_id_list = []        
         category = Category.objects.get(pk=self.kwargs.get('category_id'))
 
         if not self.request.session.get('question_id_list', False):
-            print('-------create session-----')
             question_list = category.question_set.all()
 
-            while(len(random_question_id_list) < 5):
+            while(len(random_question_id_list) < QUESTION_MAX_QTY):
                 rand_int = random.randint(0, question_list.count() - 1)
                 rand_question = question_list[rand_int]
 
@@ -31,7 +44,6 @@ class QuestionView(TemplateView):
             
         
         question_id_list = self.request.session.get('question_id_list')
-
         question_id = question_id_list[self.kwargs.get('question_no') - 1]
 
         ctx['question'] = Question.objects.get(pk=question_id)
@@ -74,3 +86,6 @@ class AnswerResultView(TemplateView):
         ctx['category_id'] = self.kwargs.get('category_id')
 
         return ctx
+
+class SessionExpireView(TemplateView):
+    template_name = "session_expire.html"

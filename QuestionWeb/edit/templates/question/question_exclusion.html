@@ -13,7 +13,7 @@
         <h3>【カテゴリ：{{ category.name }}の問題一覧】</h3>
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
-                <tr>
+                <tr class="question">
                   <th style="width:80%">問題文</th>
                   <th style="width:20%">除外ボタン</th>
                 </tr>
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ question.body }}</td>
                 <td>
-                  <form action="{% url 'question_exclusion' category.pk %}" method="post">
+                  <form id="action_form" action="{% url 'question_exclusion' category.pk %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="category_id" value={{ category.pk }}>
                     <input type="hidden" name="question_id" value={{ question.pk }}>
@@ -43,5 +43,26 @@
         </div>
       </div>
 </div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+$(function(){
+    $('#action_form').submit(function(){
+        question_qty = $('.question').length;
+
+        if(question_qty < 5) {
+            alert("問題は最低でも5問必要です。");
+            return false;
+        }
+
+        return true;
+    });
+
+});
+
+</script>
 
 {% endblock %}

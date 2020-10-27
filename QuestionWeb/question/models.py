@@ -14,6 +14,7 @@ class Question(models.Model):
     Category = models.ManyToManyField(Category)
     question_no = models.PositiveSmallIntegerField(verbose_name='問題No.', default=0)
     answer_choice_no = models.PositiveSmallIntegerField(verbose_name='正解No.', default=1)
+    comment = models.CharField('解説', max_length=1024, default="")
 
     def __str__(self):
         return self.body

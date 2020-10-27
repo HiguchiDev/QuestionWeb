@@ -9,17 +9,18 @@
     <p><button type="button" class="choice_btn btn bg-white" id="choice_btn_{{ textchoice.choice_no }}" name="{{ textchoice.choice_no }}" >{{ textchoice.choice_no }} : {{ textchoice.body }}</button></p>
 {% endfor %}
 
-<button id="decision_btn" type="button" class="btn btn-success">けってい</button>
+<button id="decision_btn" type="button" class="btn btn-dark">けってい</button>
 
 {% endblock %}
 
 {% block js %}
 <script>
     $(function(){
-        var next_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
+        $("#decision_btn").prop("disabled", true);
+        var default_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
+        var next_url = default_url
 
         $('#decision_btn').click(function() {
-            
             location.href = next_url;
         });
 
@@ -38,7 +39,10 @@
 
             next_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
             next_url = next_url.replace("99999", $(this).attr('name'));
-            //console.log(next_url);
+
+            $("#decision_btn").addClass("btn-success");
+            $("#decision_btn").removeClass("btn-dark");
+            $("#decision_btn").prop("disabled", false);
         });
     });
 </script>
