@@ -1,12 +1,21 @@
+.gutter-40.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.gutter-40 > [class^="col-"], .gutter-40 > [class^=" col-"] {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
 #site_icon {
     margin-top : 5px;
     margin-bottom : 5px;
+    margin-right : 0px;
 }
 
 #site_name {
     margin-top : 10px;
-    padding: 0px;
-
+    padding-left: 10px;
 }
 
 #site_sub_name {
@@ -18,3 +27,19 @@ img {
     max-width: 100%;
     height: auto;
     }
+
+.question_bg {
+    position: relative;
+}
+
+.princess_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.star_bg {
+    position: absolute;
+    top: 0;
+    left: 230px;
+}
