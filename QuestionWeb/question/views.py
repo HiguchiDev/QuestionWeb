@@ -9,6 +9,11 @@ from django.shortcuts import reverse
 
 QUESTION_MAX_QTY = 5
 
+class TopPageView(TemplateView):
+    template_name = "top.html"
+
+    
+
 class QuestionView(TemplateView):
     template_name = "question.html"
 

@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% block meta_title %}トップ{% endblock %}
+{% block content %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'top.css' %}" rel="stylesheet">
+{% endblock %}
+
+<div class="jumbotron d-md-none d-block sp_bg">
+    <div class="container-fluid">
+      <div class="row" id="sample_question">
+        <div class="col-12"><h2 class="text-center"><b>Q:シンデレラのドレスの色はどれ？</b></h2></div>
+      </div>
+      <div class="row" id="sample_choice">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
+            <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
+            <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="sample_answer">
+        <div class="col-12"><h5 class="text-right"><b>正解を見る</b></h5></div>
+      </div>
+    </div>
+</div>
+
+<div class="jumbotron d-none d-md-block pc_bg">
+    <div class="container-fluid">
+      <div class="row" id="sample_question">
+        <div class="col-12"><h2 class="text-center"><b>Q:シンデレラのドレスの色はどれ？</b></h2></div>
+      </div>
+      <div class="row" id="sample_choice">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
+            <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
+            <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="sample_answer">
+        <div class="col-12"><h5 class="text-center"><b>正解を見る</b></h5></div>
+      </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row category_bar_rap">
+        <div class="d-flex justify-content-center align-items-center">
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_left"></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div class="category_name"><h4><b>プリンセス別</b></h4></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_right"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container sp_category_icons d-md-none d-block">
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pc_category_icons d-none d-md-block">
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center category_icon_raw">
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    
+        <div class="card category_icon_rap border-light">
+            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>白雪姫</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row category_bar_rap">
+        <div class="d-flex justify-content-center align-items-center">
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_left"></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div class="category_name"><h4><b>難易度別</b></h4></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_right"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center nanido_bunya_row">
+        <div class="card buya_card border-light">
+            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>仮</b></h4>
+            </div>
+        </div>
+    
+        <div class="card buya_card border-light">
+            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>仮</b></h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row category_bar_rap">
+        <div class="d-flex justify-content-center align-items-center">
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_left"></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div class="category_name"><h4><b>分野別</b></h4></div>
+            <div><img src="{% static "category_icon.png" %}" alt="" class="category_bar_icon"></div>
+            <div><img src="{% static "category_bar.png" %}" alt="" class="img-fluid category_bar_right"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center nanido_bunya_row">
+        <div class="card buya_card border-light">
+            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>仮</b></h4>
+            </div>
+        </div>
+    
+        <div class="card buya_card border-light">
+            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>仮</b></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center banner_row">
+        <div class="card border-light banner_sp d-md-none d-block">
+            <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+
+        <div class="card border-light banner_pc d-none d-md-block">
+            <img class="card-img" src="{% static "banner.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="jumbotron d-none d-md-block pc_footer_bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12"><br><h3 class="text-center"><b>次世代のプリンセスに</b></h3></div>
+      </div>
+      <div class="row">
+        <div class="col-12"><h3 class="text-center"><b>教養を</b></h3><br></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="jumbotron d-md-none d-block sp_footer_bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12"><br><h3 class="text-center sp_footer_text"><b>次世代のプリンセスに</b></h3></div>
+      </div>
+      <div class="row">
+        <div class="col-12"><h3 class="text-center sp_footer_text"><b>教養を</b></h3><br></div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

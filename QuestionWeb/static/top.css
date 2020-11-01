@@ -1,0 +1,92 @@
+#sample_question {
+    margin-bottom : 60px;
+}
+
+#sample_choice {
+    margin-bottom : 40px;  
+}
+
+#sample_answer {
+    margin-bottom : -15px;
+}
+
+.choice_image {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 70%;
+    height: auto;
+}
+
+.pc_bg { background:url(/static/2x_MaskGroup_prod.png) center no-repeat; background-size: cover;}
+.sp_bg { background:url(/static/sp_bg.png) center no-repeat; background-size: cover;}
+
+
+
+.category_bar_left {
+    padding-right: 20px;
+    height: 5%;
+}
+
+.category_bar_right {
+    padding-left: 10px;
+    height: 5%;
+}
+
+.category_name  {
+    white-space: nowrap;
+    padding-top: 9px;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.category_bar_rap {
+    margin-bottom : 25px;
+}
+
+.category_bar_icon {
+    margin-right: 30px;
+    width: 75%;
+}
+
+.category_icon { background:url(/static/shirayukihime.png) center no-repeat; background-size: cover;}
+
+/* 文字を中央に揃える */
+.card-img-overlay{
+    padding: 0;
+    top: calc(50% - 0.75rem);
+    text-align: center;
+    font-weight: bold;
+  }
+
+.category_icon_rap {
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    max-width: 15%;
+    min-width: 150px;
+    height: auto;
+}
+
+.buya_card {
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.bunya {
+    max-width: 100%;
+    min-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+.nanido_bunya_row {
+    margin-bottom: 30px;
+}
+
+.banner_row {
+    padding-top: 30px;
+    background-color: #FBFBFB;
+    padding-bottom: 30px;
+}
+
