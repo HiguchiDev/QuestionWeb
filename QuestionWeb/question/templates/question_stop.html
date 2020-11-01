@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block meta_title %}本日のクイズは終了です。{% endblock %}
+
+{% load static %}
+{% block css %}
+<link href="{% static 'question_stop.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div class="container">
+        <div class="row" id="main_row">
+            <div class="col text-center" id="stop_main_message">
+                <p><b>本日のクイズは終了です</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center" id="stop_sub_message">
+                <p>より安全にお使いいただくため、</p>
+                <p>1日5問までのクイズを上限としております。</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center banner_row">
+            <div class="card border-light banner_sp d-md-none d-block">
+                <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+    
+            <div class="card border-light banner_pc d-none d-md-block">
+                <img class="card-img" src="{% static "banner.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

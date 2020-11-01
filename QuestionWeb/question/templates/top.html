@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block meta_title %}トップ{% endblock %}
-{% block content %}
+
 {% load static %}
 
 {% block css %}
 <link href="{% static 'top.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block content %}
 <div class="jumbotron d-md-none d-block sp_bg">
     <div class="container-fluid">
       <div class="row" id="sample_question">
@@ -62,65 +63,81 @@
 <div class="container sp_category_icons d-md-none d-block">
     <div class="row justify-content-center category_icon_raw">
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     </div>
 
     <div class="row justify-content-center category_icon_raw">
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     </div>
 
     <div class="row justify-content-center category_icon_raw">
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
     </div>
 
     <div class="row justify-content-center category_icon_raw">
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
     </div>
 </div>
@@ -128,61 +145,78 @@
 <div class="container pc_category_icons d-none d-md-block">
     <div class="row justify-content-center category_icon_raw">
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
-            </div>
+            <a href="{% url 'question' 2 1 %}">
+                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>白雪姫</b></h4>
+                </div>
+            </a>
         </div>
     </div>
 
     <div class="row justify-content-center category_icon_raw">
+        
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
-    
+        
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
-    
+
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
-    
+
         <div class="card category_icon_rap border-light">
-            <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' 1 1 %}">
+            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
             <div class="card-img-overlay">
-            <h4 class="text-white"><b>白雪姫</b></h4>
+            <h4 class="text-white"><b>シンデレラ</b></h4>
             </div>
+            </a>
         </div>
     </div>
 </div>

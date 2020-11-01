@@ -1,3 +1,7 @@
+a:link, a:visited, a:hover, a:active {
+    color: black;
+  }
+
 .gutter-40.row {
     margin-right: 0px;
     margin-left: 0px;
@@ -14,6 +18,7 @@
 }
 
 #site_name {
+    white-space: nowrap;
     margin-top : 8px;
     padding-left: 10px;
     font-size: 18px;
@@ -40,6 +45,7 @@
     margin-left: 0px;
     margin-top: 5px;
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .footer_sub_text2 {
@@ -55,6 +61,7 @@
 .frame {
     display: inline-block;
     box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.8);
+    background-color: #FBFBFB;
 }
 
 .pc_footer_bg {

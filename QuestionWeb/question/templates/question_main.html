@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block meta_title %}Q{{ question_no }}{% endblock %}
+
+{% load static %}
+{% block css %}
+<link href="{% static 'question.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div class="container">
+        <div class="row" id="question">
+            <div class="card mx-auto border-light question_card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-center body_text_pc d-none d-md-block">
+                            <div id="question_body"><b>Q:{{ question.body }}</b></div>
+                        </div>
+                        <div class="col body_text_sp d-md-none d-block">
+                            <div id="question_body"><b>Q:{{ question.body }}</b></div>
+                        </div>
+                    </div>
+                    {% for textchoice in question.textchoice_set.all %}
+                        <div class="row">
+                            <div class="col text-center choice_text_pc d-none d-md-block">
+                                <p><button type="button" class="choice_btn btn bg-white question_choice" id="choice_btn_{{ textchoice.choice_no }}" name="{{ textchoice.choice_no }}" >{{ textchoice.choice_no }} : {{ textchoice.body }}</button></p>
+                            </div>
+        
+                            <div class="col choice_text_sp d-md-none d-block">
+                                <p><button type="button" class="choice_btn btn bg-white question_choice" id="choice_btn_{{ textchoice.choice_no }}" name="{{ textchoice.choice_no }}" >{{ textchoice.choice_no }} : {{ textchoice.body }}</button></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col text-center">
+                            <button id="decision_btn" type="button" class="btn"><b>けってい</b></button>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="row justify-content-center banner_row">
+            <div class="card border-light banner_sp d-md-none d-block">
+                <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+    
+            <div class="card border-light banner_pc d-none d-md-block">
+                <img class="card-img" src="{% static "banner.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    $(function(){
+        $("#decision_btn").prop("disabled", true);
+        var default_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
+        var next_url = default_url
+
+        $('#decision_btn').click(function() {
+            location.href = next_url;
+        });
+
+        $('.choice_btn').click(function() {
+            $(this).addClass("bg-secoundary");
+            $(this).removeClass("bg-white");
+
+            var clicked_btn = $(this)
+
+            $(".choice_btn").each(function(i, o){
+                if ($(o).attr('id') != clicked_btn.attr('id')){
+                    $(o).addClass("bg-white");
+                    $(o).removeClass("bg-secoundary");
+                }
+            });
+
+            next_url = "{% url 'answer_result' category.id question.id question_no 99999 %}"
+            next_url = next_url.replace("99999", $(this).attr('name'));
+
+            $("#decision_btn").prop("disabled", false);
+        });
+    });
+</script>
+{% endblock %}

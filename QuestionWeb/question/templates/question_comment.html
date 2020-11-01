@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block meta_title %}Q{{ question_no }}|解説{% endblock %}
+
+{% load static %}
+{% block css %}
+<link href="{% static 'question_comment.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div class="container">
+        <div class="row" id="result_mark_row">
+            <div class="col text-center" >
+                {% if answer_choice_no == choice_no %}
+                    <img src="{% static "seikai_mark.png" %}" alt="" class="img-fluid result_mark">
+                {% else %}
+                    <img src="{% static "huseikai_mark.png" %}" alt="" class="img-fluid result_mark">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center" id="answer_result">
+                {% if answer_choice_no == choice_no %}
+                <p><b>せいかい！</b></p>
+                {% else %}
+                <p><b>ふせいかい！</b></p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button id="next_btn" type="button" class="btn"><b>つぎのもんだい</b></button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center banner_row">
+            <div class="card border-light banner_sp d-md-none d-block">
+                <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+    
+            <div class="card border-light banner_pc d-none d-md-block">
+                <img class="card-img" src="{% static "banner.png" %}" alt="">
+                <div class="card-img-overlay">
+                <h4 class="text-white"><b>バナー</b></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    $(function(){
+        $('#next_btn').click(function() {
+            location.href = "{% url 'question' category_id question_no|add:"1" %}";
+        });
+    });
+</script>
+{% endblock %}

@@ -15,7 +15,7 @@ class TopPageView(TemplateView):
     
 
 class QuestionView(TemplateView):
-    template_name = "question.html"
+    template_name = "question_main.html"
 
     def get(self, request, **kwargs):
         
@@ -24,6 +24,9 @@ class QuestionView(TemplateView):
         # セッション切れチェック
         if question_no != 1 and not self.request.session.get('question_id_list', False):
             return HttpResponseRedirect(reverse('session_expire'))
+
+        elif question_no > QUESTION_MAX_QTY or self.request.session.get('is_question_end', False):
+            return HttpResponseRedirect(reverse('stop'))
 
         #ToDo : 紐づく問題が5問以下の場合はエラーとする。
 
@@ -65,6 +68,9 @@ class QuestionView(TemplateView):
 
         return False
 
+class QuestionStopView(TemplateView):
+    template_name = "question_stop.html"
+
 class CategoryView(TemplateView):
     template_name = "category.html"
 
@@ -78,7 +84,7 @@ class CategoryView(TemplateView):
         return ctx
 
 class AnswerResultView(TemplateView):
-    template_name = "answer.html"
+    template_name = "question_comment.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -90,6 +96,10 @@ class AnswerResultView(TemplateView):
         ctx['choice_no'] = self.kwargs.get('choice_no')
         ctx['question'] = question
         ctx['category_id'] = self.kwargs.get('category_id')
+
+        if self.kwargs.get('question_no') == QUESTION_MAX_QTY:
+            self.request.session.set_expiry(0)
+            self.request.session['is_question_end'] = True
 
         return ctx
 

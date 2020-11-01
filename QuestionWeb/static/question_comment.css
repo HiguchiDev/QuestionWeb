@@ -1,0 +1,30 @@
+#answer_result {
+    font-size: 32px;
+}
+
+.result_mark {
+    max-width: 100px;
+    height: auto;
+    text-align: center;
+}
+
+#result_mark_row {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.banner_row {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+#next_btn {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 1rem !important;
+    font-size: 18px;
+    color: #FBFBFB;
+    background-color: #0EC0AB;
+}
