@@ -22,7 +22,10 @@ class QuestionView(TemplateView):
         question_no = kwargs.get('question_no')
 
         # セッション切れチェック
-        if question_no != 1 and not self.request.session.get('question_id_list', False):
+        if question_no == 1 and self.request.session.get('is_question_end', False) == False:
+            self.request.session.clear() # 上限前に別カテゴリの問題に挑戦した場合はクリア
+
+        elif question_no != 1 and not self.request.session.get('question_id_list', False):
             return HttpResponseRedirect(reverse('session_expire'))
 
         elif question_no > QUESTION_MAX_QTY or self.request.session.get('is_question_end', False):
