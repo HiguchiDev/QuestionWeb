@@ -33,25 +33,29 @@
                 <button id="next_btn" type="button" class="btn"><b>つぎのもんだい</b></button>
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="row justify-content-center banner_row">
-            <div class="card border-light banner_sp d-md-none d-block">
-                <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>バナー</b></h4>
-                </div>
+{% endblock %}
+
+{% block footer %}
+<div class="container">
+    <div class="row justify-content-center banner_row">
+        <div class="card border-light banner_sp d-md-none d-block">
+            <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
             </div>
-    
-            <div class="card border-light banner_pc d-none d-md-block">
-                <img class="card-img" src="{% static "banner.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>バナー</b></h4>
-                </div>
+        </div>
+
+        <div class="card border-light banner_pc d-none d-md-block">
+            <img class="card-img" src="{% static "banner.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
             </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block js %}
