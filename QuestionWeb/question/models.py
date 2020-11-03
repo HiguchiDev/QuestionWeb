@@ -7,6 +7,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+def set_default_disp_type():
+    disp_type, _ = QuestionDispType.objects.get_or_create(name='左寄せ')
+    return disp_type.id
+
+class QuestionDispType(models.Model):
+    name = models.CharField('表示形式名', max_length=512, blank=False)
+
+    def __str__(self):
+        return self.name
+
+
 # Create your models here.
 class Question(models.Model):
     body = models.CharField('本文（漢字）', max_length=1024)
@@ -14,8 +25,9 @@ class Question(models.Model):
     Category = models.ManyToManyField(Category)
     question_no = models.PositiveSmallIntegerField(verbose_name='問題No.', default=0)
     answer_choice_no = models.PositiveSmallIntegerField(verbose_name='正解No.', default=1)
-    comment = models.CharField('解説（正解の場合）', max_length=1024, default="")
-    
+    ok_comment = models.CharField('解説（正解の場合）', max_length=1024, default="")
+    ng_comment = models.CharField('解説（不正解の場合）', max_length=1024, default="")
+    question_disp_type = models.ForeignKey(QuestionDispType, on_delete=models.SET_DEFAULT, default=set_default_disp_type)
 
     def __str__(self):
         return self.body

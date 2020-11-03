@@ -112,12 +112,13 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ['body', "body_kana", 'Category', 'answer_choice_no', 'comment']
+        fields = ['body', "body_kana", 'Category', 'answer_choice_no', 'ok_comment', 'ng_comment', 'question_disp_type']
 
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
             'body_kana': Textarea(attrs={'rows':2, 'cols':1}),
-            'comment': Textarea(attrs={'rows':2, 'cols':1}),
+            'ok_comment': Textarea(attrs={'rows':2, 'cols':1}),
+            'ng_comment': Textarea(attrs={'rows':2, 'cols':1}),
         }
 
 
