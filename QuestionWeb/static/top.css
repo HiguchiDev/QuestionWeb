@@ -1,3 +1,7 @@
+.frame {
+    position: relative;
+}
+
 #sample_question {
     margin-bottom : 60px;
 }
@@ -17,7 +21,10 @@
     height: auto;
 }
 
-.pc_bg { background:url(/static/2x_MaskGroup_prod.png) center no-repeat; background-size: cover;}
+.pc_bg {
+    background:url(/static/2x_MaskGroup_prod.png) center no-repeat;
+    background-size: cover;
+}
 .sp_bg { background:url(/static/sp_bg.png) center no-repeat; background-size: cover;}
 
 
@@ -90,3 +97,6 @@
     padding-bottom: 30px;
 }
 
+.sp_footer_bg {
+    margin-bottom: 0px;
+}

@@ -11,13 +11,15 @@
         integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
         crossorigin="anonymous">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link href="{% static 'question_base.css' %}" rel="stylesheet">
   <title>{% block meta_title %}{% endblock %}</title>
+  {% block css %}
+  {% endblock %}
+  
+</head>
+
 <body>
-
-
-<link href="{% static 'question_base.css' %}" rel="stylesheet">
-{% block css %}
-{% endblock %}
+<div id="body_wrapper">
 
 <header>
   <div class="container-fluid frame">
@@ -87,10 +89,7 @@
           </div>
         </div>
       </div>
-
-      
     </div>
-
   </div>
 
   <div class="container-fluid">
@@ -117,5 +116,6 @@
 {% block js %}
 {% endblock %}
 
+</div>
 </body>
 </html>
