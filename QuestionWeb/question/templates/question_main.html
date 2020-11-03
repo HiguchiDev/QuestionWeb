@@ -22,11 +22,18 @@
                     </div>
                     {% for textchoice in question.textchoice_set.all %}
                         <div class="row">
-                            <div class="col text-center choice_text choice_col_pc d-none d-md-block">
+                            <div class="col text-left choice_text choice_col_pc d-none d-md-block">
                                 <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                     <div class="card-body mx-auto choice_card_body_pc">
                                         <div class="card-text">
-                                            <span class="choice_no_wrapper">{{ textchoice.choice_no }} : </span>{{ textchoice.body | linebreaksbr }}
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <span class="choice_no_wrapper">{{ textchoice.choice_no }} . </span>
+                                                </div>
+                                                <div class="col-11">
+                                                    {{ textchoice.body | linebreaksbr }}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -35,14 +42,9 @@
                             <div class="col text-left choice_text choice_col_sp d-md-none d-block">
                                 <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-1 choice_no_wrapper">
-                                                {{ textchoice.choice_no }}:
-                                            </div>
-                                            <div class="col-11">
-                                                <div class="card-text">{{ textchoice.body | linebreaksbr }}</div>
-                                            </div>
-                                        </div>
+
+                                                <div class="card-text">{{ textchoice.choice_no }}.&nbsp;{{ textchoice.body | linebreaksbr }}</div>
+
                                     </div>
                                 </div>
                             </div>
