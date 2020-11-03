@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url, include
+from QuestionWeb import views
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), #  追加
@@ -23,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('edit/', include('edit.urls')),   # ←ここを追加
     path('question/', include('question.urls')),   # ←ここを追加
+    path('', views.TopRefirectView.as_view(), name='top_redirect'),
 ]
