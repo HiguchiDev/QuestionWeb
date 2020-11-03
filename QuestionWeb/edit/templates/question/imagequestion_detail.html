@@ -8,24 +8,23 @@
       <div class="col-12">
         <div class="card card-default">
           <div class="card-body">
-            <p>問題文（漢字）：{{ question.body|linebreaksbr }}</p>
-            <p>問題文（ひらがな）：{{ question.body|linebreaksbr }}</p>
-            <p>正解：{{ question.answer_choice_no }}</p>
-            <p>解説（正解）：{{ question.ok_comment|linebreaksbr }}</p>
-            <p>解説（不正解）：{{ question.ng_comment|linebreaksbr }}</p>
-            <img src="/media/{{ question.avator }}">
+            <p>問題文（漢字）：{{ imagequestion.body|linebreaksbr }}</p>
+            <p>問題文（ひらがな）：{{ imagequestion.body|linebreaksbr }}</p>
+            <p>正解：{{ imagequestion.answer_choice_no }}</p>
+            <p>解説（正解）：{{ imagequestion.ok_comment|linebreaksbr }}</p>
+            <p>解説（不正解）：{{ imagequestion.ng_comment|linebreaksbr }}</p>
+            <img src="/media/{{ imagequestion.avator }}">
           </div>
           <div class="card-footer">
             <table class="table table-bordered">
                 <thead class="thead-light">
-                    <tr><th style="width:10%">選択肢No.</th><th style="width:45%">選択肢内容（漢字）</th><th style="width:45%">選択肢内容（ひらがな）</th></tr>
+                    <tr><th style="width:10%">選択肢No.</th><th style="width:90%">選択肢画像</th></tr>
                 </thead>
                 
-            {% for text_choice in choices %}
+            {% for img_choice in choices %}
                 <tr>
-                  <td style="width:10%">{{ text_choice.choice_no }}</td>
-                  <td style="width:45%">{{ text_choice.body|linebreaksbr }}</td>
-                  <td style="width:45%">{{ text_choice.body_kana|linebreaksbr }}</td>
+                  <td style="width:10%">{{ img_choice.choice_no }}</td>
+                  <td style="width:90%"><img src="/media/{{ img_choice.img }}"></td>
                 </tr>
             </div>
             {% endfor %}
@@ -41,7 +40,7 @@
         {% else %}
           <a class="btn btn-primary" href="{% url 'question_list' %}" role="button">問題一覧に戻る</a>
         {% endif %}
-        <a class="btn btn-primary" href="{% url 'question_update' question.id %}" role="button">問題を編集する</a>
+        <a class="btn btn-primary" href="{% url 'question_update_img' imagequestion.id %}" role="button">問題を編集する</a>
         <a class="btn btn-primary" href="{% url 'category_list' %}" role="button">管理トップに戻る</a>
       </div>
     </div>

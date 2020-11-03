@@ -21,6 +21,15 @@
                 </td>
             </tr>
             {% endfor %}
+            {% for question in img_question_list %}
+            <tr>
+                <td><a href="{% url 'question_detail_img' question.pk %}">{{ question.body }}</a></td>
+                <td>
+                  <a class="btn btn-primary" href="{% url 'question_update_img' question.pk %}" role="button">編集</a>
+                  <a class="btn btn-danger" href="{% url 'question_delete_img' question.pk %}" role="button">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
         </table>
       </div>
     </div>

@@ -31,6 +31,19 @@
                 </td>
             </tr>
             {% endfor %}
+            {% for question in img_question_list %}
+            <tr>
+                <td>{{ question.body }}</td>
+                <td>
+                  <form action="{% url 'question_add' category.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="category_id" value={{ category.pk }}>
+                    <input type="hidden" name="imagequestion_id" value={{ question.pk }}>
+                    <input type="submit" class="btn btn-primary" value="追加"></a>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
         </table>
         
 

@@ -19,10 +19,10 @@
                 </tr>
             </thead>
             {% for question in question_list %}
-            <tr>
+            <tr class="question_tr">
                 <td>{{ question.body }}</td>
                 <td>
-                  <form id="action_form" action="{% url 'question_exclusion' category.pk %}" method="post">
+                  <form class="action_form" action="{% url 'question_exclusion' category.pk %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="category_id" value={{ category.pk }}>
                     <input type="hidden" name="question_id" value={{ question.pk }}>
@@ -30,6 +30,19 @@
                   </form>
                 </td>
             </tr>
+            {% endfor %}
+            {% for question in imagequestion_list %}
+            <tr class="question_tr">
+              <td>{{ question.body }}</td>
+              <td>
+                <form class="action_form" action="{% url 'question_exclusion' category.pk %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="category_id" value={{ category.pk }}>
+                  <input type="hidden" name="imagequestion_id" value={{ question.pk }}>
+                  <input type="submit" class="btn btn-danger" value="除外"></a>
+                </form>
+              </td>
+          </tr>
             {% endfor %}
         </table>
         
@@ -50,8 +63,9 @@
 
 <script>
 $(function(){
-    $('#action_form').submit(function(){
-        question_qty = $('.question').length;
+    $('.action_form').submit(function(){
+        question_qty = $('.question_tr').length;
+        console.log(question_qty)
 
         if(question_qty <= 5) {
             alert("問題は最低でも5問必要です。");

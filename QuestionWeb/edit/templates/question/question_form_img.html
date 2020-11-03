@@ -70,10 +70,10 @@ function set_choice_no(){
 
     
     $("[id^='li_choice_']").each(function(i, o){
-        var delete_check = $(o).find("input[type='checkbox']" + "[id^='id_textchoice_set-']").prop("checked");
+        var delete_check = $(o).find("input[type='checkbox']" + "[id^='id_imagechoice_set-']").prop("checked");
 
         if(typeof delete_check === "undefined" || delete_check == false){
-            $(o).find("input[type='number']" + "[id^='id_textchoice_set-']").val(choice_no);
+            $(o).find("input[type='number']" + "[id^='id_imagechoice_set-']").val(choice_no);
             choice_no++;
         }
         
@@ -82,7 +82,7 @@ function set_choice_no(){
 
 $(function(){
     
-    $(document).on('change', "input[type='checkbox']" + "[id^='id_textchoice_set-']", function() {
+    $(document).on('change', "input[type='checkbox']" + "[id^='id_imagechoice_set-']", function() {
         if($(this).prop("checked")){
 
             var enable_choice_qty = 0;
@@ -119,8 +119,8 @@ $(function(){
         });
         var clone = $("#choice_list > [id='li_choice_" + choice_qty + "']").clone();
 
-        clone.find("[id='id_textchoice_set-" + (choice_qty - 1) + "-body']").text("");
-        clone.find("[id='id_textchoice_set-" + (choice_qty - 1) + "-body_kana']").text("");
+        clone.find("[id='id_imagechoice_set-" + (choice_qty - 1) + "-body']").text("");
+        clone.find("[id='id_imagechoice_set-" + (choice_qty - 1) + "-body_kana']").text("");
 
         clone_html = clone.prop('outerHTML');
 
@@ -132,7 +132,7 @@ $(function(){
         var new_choice_html = new_choice_html.replace(new RegExp(li_choice_id, "g"), 'li_choice_' + (choice_qty + 1));
 
         $('#choice_list').append(new_choice_html);
-        $('#id_textchoice_set-TOTAL_FORMS').val(choice_qty + 1);
+        $('#id_imagechoice_set-TOTAL_FORMS').val(choice_qty + 1);
 
         set_choice_no();
 

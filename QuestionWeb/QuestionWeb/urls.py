@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from QuestionWeb import views
 
 urlpatterns = [
@@ -26,3 +28,5 @@ urlpatterns = [
     path('question/', include('question.urls')),   # ←ここを追加
     path('', views.TopRefirectView.as_view(), name='top_redirect'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

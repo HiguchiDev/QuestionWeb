@@ -1,0 +1,15 @@
+{% extends "question/question_form_img.html" %}
+{% block meta_title %}管理画面|問題新規作成{% endblock %}
+{% block page_title %}管理画面|問題新規作成{% endblock %}
+{% block js %}
+<script>
+$(function(){
+ 
+    set_choice_no();
+
+});
+</script>
+
+{{ block.super }}
+
+{% endblock %}
