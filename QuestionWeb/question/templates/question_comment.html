@@ -19,15 +19,39 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col text-center" id="answer_result">
-                {% if answer_choice_no == choice_no %}
-                <p><b>せいかい！</b></p>
-                {% else %}
-                <p><b>ふせいかい！</b></p>
-                {% endif %}
+        <div class="result_pc d-none d-md-block">
+            <div class="row ">
+                <div class="col-2"></div>
+                <div class="col-8 text-center" id="answer_result">
+                    {% if answer_choice_no == choice_no %}
+                        <div id="answer_result"><p><b>せいかい！</b></p></div>
+                        <div id="comment"><p>{{ question.ok_comment }}</p></div>
+                    {% else %}
+                        <div id="answer_result"><p><b>ふせいかい！</b></p></div>
+                        <div id="comment"><p>{{ question.ng_comment }}</p></div>
+                    {% endif %}
+
+                </div>
+                <div class="col-2"></div>
             </div>
         </div>
+
+        <div class="result_sp d-md-none d-block">
+            <div class="row">
+                <div class="col text-center">
+                    
+                    {% if answer_choice_no == choice_no %}
+                        <div id="answer_result"><p><b>せいかい！</b></p></div>
+                        <div id="comment"><p>{{ question.ok_comment }}</p></div>
+                    {% else %}
+                        <div id="answer_result"><p><b>ふせいかい！</b></p></div>
+                        <div id="comment"><p>{{ question.ng_comment }}</p></div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col text-center">
                 <button id="next_btn" type="button" class="btn"><b>つぎのもんだい</b></button>

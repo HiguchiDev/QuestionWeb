@@ -2,6 +2,10 @@
     font-size: 32px;
 }
 
+#comment {
+    font-size: 18px;
+}
+
 .result_mark {
     max-width: 100px;
     height: auto;

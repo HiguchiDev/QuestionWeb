@@ -8,8 +8,11 @@
       <div class="col-12">
         <div class="card card-default">
           <div class="card-body">
-            <p>{{ question.body|linebreaksbr }}</p>
+            <p>問題文（漢字）：{{ question.body|linebreaksbr }}</p>
+            <p>問題文（ひらがな）：{{ question.body|linebreaksbr }}</p>
             <p>正解：{{ question.answer_choice_no }}</p>
+            <p>解説（正解）：{{ question.ok_comment|linebreaksbr }}</p>
+            <p>解説（不正解）：{{ question.ng_comment|linebreaksbr }}</p>
           </div>
           <div class="card-footer">
             <table class="table table-bordered">
