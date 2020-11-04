@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from question.models import Question, TextChoice, Category
+from question.models import Question, TextChoice, Category, ImageQuestion
 import random
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse
@@ -38,35 +38,73 @@ class QuestionView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
-        random_question_id_list = []        
+        random_question_id_list = []
         category = Category.objects.get(pk=self.kwargs.get('category_id'))
 
         if not self.request.session.get('question_id_list', False):
-            question_list = category.question_set.all()
-
             while(len(random_question_id_list) < QUESTION_MAX_QTY):
-                rand_int = random.randint(0, question_list.count() - 1)
-                rand_question = question_list[rand_int]
-
-                if self.__is_selected(random_question_id_list, rand_question) == False:
-                    random_question_id_list.append(rand_question.id)
-
+                
+                # TextQuestion
+                if random.randint(0, 1) == 0 and category.question_set.all().count() > 0:
+                    q_id = self.__get_text_question_id(random_question_id_list, category)
+                    
+                    if q_id is not None:
+                        random_question_id_list.append({'text' : q_id})
+                    
+                # ImageQuestion
+                elif random.randint(0, 1) == 1 and category.imagequestion_set.all().count() > 0:
+                    q_id = self.__get_img_question_id(random_question_id_list, category)
+                    
+                    if q_id is not None:
+                        random_question_id_list.append({'img' : q_id})
+            
             self.request.session.set_expiry(0)
             self.request.session['question_id_list'] = random_question_id_list
             
         
         question_id_list = self.request.session.get('question_id_list')
-        question_id = question_id_list[self.kwargs.get('question_no') - 1]
+        question_id_dict = question_id_list[self.kwargs.get('question_no') - 1]
 
-        ctx['question'] = Question.objects.get(pk=question_id)
+        if 'text' in question_id_dict:
+            ctx['question'] = Question.objects.get(pk=question_id_dict['text'])
+            ctx['question_type'] = 'text'
+        elif 'img' in question_id_dict:
+            ctx['question'] = ImageQuestion.objects.get(pk=question_id_dict['img'])
+            ctx['question_type'] = 'img'
+
         ctx['category'] = category
 
         return ctx
-    
-    def __is_selected(self, random_question_id_list, question):
+
+    def __get_text_question_id(self, random_question_id_list, category):
+        question_list = category.question_set.all()
+
+        for i in range(question_list.count()):
+            rand_int = random.randint(0, question_list.count() - 1)
+            rand_question = question_list[rand_int]
+
+            if self.__is_selected(random_question_id_list, 'text', rand_question) == False:
+                return rand_question.id
         
-        for rand_question_id in random_question_id_list:
-            if rand_question_id == question.id:
+        return None
+
+    def __get_img_question_id(self, random_question_id_list, category):
+        question_list = category.imagequestion_set.all()
+
+        for i in range(question_list.count()):
+            rand_int = random.randint(0, question_list.count() - 1)
+            rand_question = question_list[rand_int]
+
+            if self.__is_selected(random_question_id_list, 'img', rand_question) == False:
+                return rand_question.id
+        
+        return None
+
+    
+    def __is_selected(self, random_question_id_list, key, question):
+        
+        for rand_question_id_dict in random_question_id_list:
+            if rand_question_id_dict.get(key) == question.id:
                 return True
 
         return False
@@ -92,7 +130,11 @@ class AnswerResultView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         
-        question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        if self.kwargs.get('question_type') == 'text':
+            question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        elif self.kwargs.get('question_type') == 'img':
+            question = ImageQuestion.objects.get(pk=self.kwargs.get('question_id'))
+
         answer_choice_no = question.answer_choice_no
 
         ctx['answer_choice_no'] = answer_choice_no
