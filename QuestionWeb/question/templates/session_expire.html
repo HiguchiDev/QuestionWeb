@@ -1,8 +1,48 @@
 {% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'question_session_expire.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block meta_title %}セッション切れ{% endblock %}
 {% block page_title %}セッション切れです。{% endblock %}
 {% block content %}
 
-<p>セッション切れ</p>
 
+<div id="main">
+    <div class="container">
+        <div class="row" id="main_row">
+            <div class="col text-center" id="expire_main_message">
+                <p><b>セッション切れです。</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center" id="exprire_sub_message">
+                <p>お手数ですが、はじめからやりなおしてください。</p>
+                <a class="btn btn-primary" href="{% url 'top' %}" role="button" id="top_btn">トップに戻る</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<div class="container">
+    <div class="row justify-content-center banner_row">
+        <div class="card border-light banner_sp d-md-none d-block">
+            <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+
+        <div class="card border-light banner_pc d-none d-md-block">
+            <img class="card-img" src="{% static "banner.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

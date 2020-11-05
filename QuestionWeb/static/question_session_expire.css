@@ -1,0 +1,31 @@
+
+#expire_main_message {
+    font-size: 32px;
+    width: 680px;
+}
+
+#exprire_sub_message {
+    font-size: 18px;
+}
+
+#main_row {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.banner_row {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+#top_btn {
+    margin-top: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 55px;
+    padding-right: 55px;
+    border-radius: 1rem !important;
+    font-size: 18px;
+    color: #FBFBFB;
+    background-color: #0EC0AB;
+}

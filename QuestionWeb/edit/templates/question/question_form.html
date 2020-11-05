@@ -81,6 +81,7 @@ function set_choice_no(){
 }
 
 $(function(){
+
     
     $(document).on('change', "input[type='checkbox']" + "[id^='id_textchoice_set-']", function() {
         if($(this).prop("checked")){
@@ -178,6 +179,7 @@ $(function(){
             alert("正解Noに該当する選択肢がありません。");
             return false;
         }
+        
         return true;
     });
 });

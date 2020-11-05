@@ -75,31 +75,27 @@
                             </div>
                         {% endfor %}
                     {% elif question_type == 'img' %}
-                        {% for imagechoice in question.imagechoice_set.all %}
-                            <div class="row">
-                                <div class="col text-center choice_text choice_col_pc d-none d-md-block">
-                                    <div class="card border-white choice_card" id="choice_btn_{{ imagechoice.choice_no }}" name={{ imagechoice.choice_no }}>
-                                        <div class="card-body mx-auto choice_card_body_pc">
-                                            <div class="card-text">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img src="/media/{{ imagechoice.img }}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="img_choice_pc_width d-none d-md-block"></div>
+                            {% for imagechoice in question.imagechoice_set.all %}
+                                <div class="col mx-auto choice_col ">
+                                    <span class="card text-center border-white choice_card img_choice" id="choice_btn_{{ imagechoice.choice_no }}" name={{ imagechoice.choice_no }}>
+                                        <span class="card-body img_choice_card_body">
+                                            <span class="card-text">
+                                                <img src="/media/{{ imagechoice.img }}">
+                                            </span>
+                                        </span>
+                                    </span>
                                 </div>
-
-                                <div class="col text-center choice_text choice_col_sp d-md-none d-block">
-                                    <div class="card border-white choice_card" id="choice_btn_{{ imagechoice.choice_no }}" name={{ imagechoice.choice_no }}>
-                                        <div class="card-body mx-auto">
-                                            <img src="/media/{{ imagechoice.img }}">
-                                        </div>
+                                {% if forloop.counter|divisibleby:question.wrap_back_num %}
+                                        <div class="img_choice_pc_width d-none d-md-block"></div>
                                     </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+                                    <div class="row">
+                                        <div class="img_choice_pc_width d-none d-md-block"></div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="img_choice_pc_width d-none d-md-block"></div>
+                        </div>
                     {% endif %}
                     <div class="row">
                         <div class="col text-center">

@@ -32,7 +32,6 @@ class Question(models.Model):
     def __str__(self):
         return self.body
 
-
 class TextChoice(models.Model):
     body = models.CharField('選択肢（漢字）', max_length=512)
     body_kana = models.CharField('選択肢（ひらがな）', max_length=1024, default="")
@@ -51,6 +50,7 @@ class ImageQuestion(models.Model):
     answer_choice_no = models.PositiveSmallIntegerField(verbose_name='正解No.', default=1)
     ok_comment = models.CharField('解説（正解の場合）', max_length=1024, default="")
     ng_comment = models.CharField('解説（不正解の場合）', max_length=1024, default="")
+    wrap_back_num = models.PositiveSmallIntegerField(verbose_name='1行の最大の選択肢数.', default=3)
 
     def __str__(self):
         return self.body
@@ -59,6 +59,22 @@ class ImageChoice(models.Model):
     img = models.ImageField(verbose_name = '画像', upload_to='images/', null=True)
     ImageQuestion = models.ForeignKey(ImageQuestion, on_delete=models.CASCADE)
     choice_no = models.PositiveSmallIntegerField(verbose_name='選択肢No.', default=1)
+
+    def delete(self, using=None, keep_parents=False):
+        self.img.delete()
+
+        return super().delete(using, keep_parents)
+
+    def save(self, *args, **kwargs):
+        try:
+            original_profile = ImageChoice.objects.get(pk=self.pk)
+            if original_profile.img:
+                original_profile.img.delete(save=False)
+
+        except self.DoesNotExist:
+            pass
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.body

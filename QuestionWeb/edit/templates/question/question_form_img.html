@@ -119,8 +119,7 @@ $(function(){
         });
         var clone = $("#choice_list > [id='li_choice_" + choice_qty + "']").clone();
 
-        clone.find("[id='id_imagechoice_set-" + (choice_qty - 1) + "-body']").text("");
-        clone.find("[id='id_imagechoice_set-" + (choice_qty - 1) + "-body_kana']").text("");
+        console.log(clone.find("a").remove());
 
         clone_html = clone.prop('outerHTML');
 
@@ -174,8 +173,14 @@ $(function(){
 
         answer_choice_no = $("#id_answer_choice_no").val();
 
-        if( answer_choice_no > choice_qty){
+        if( answer_choice_no > choice_qty || answer_choice_no == 0){
             alert("正解Noに該当する選択肢がありません。");
+            return false;
+        }
+
+
+        if( $('#id_wrap_back_num').val() <= 0){
+            alert("1行の最大選択肢数は1以上にしてください。");
             return false;
         }
         return true;

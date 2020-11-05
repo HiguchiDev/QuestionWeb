@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 
 
 class LoginRequiredMixin(object):
-    @method_decorator(login_required(login_url = '/accounts/login/')) #ここがかわった
+    @method_decorator(login_required(login_url = '/accounts/login/'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
@@ -184,7 +184,7 @@ class ImageQuestionForm(ModelForm):
 
     class Meta:
         model = ImageQuestion
-        fields = ['body', "body_kana", 'Category', 'answer_choice_no', 'ok_comment', 'ng_comment',]
+        fields = ['body', "body_kana", 'Category', 'answer_choice_no', 'ok_comment', 'ng_comment', 'wrap_back_num']
 
         widgets = {
             'body': Textarea(attrs={'rows':2, 'cols':1}),
@@ -255,7 +255,7 @@ class ImageQuestionUpdateFormsetView(LoginRequiredMixin, UpdateWithInlinesView):
     template_name = "question/question_form_img.html"
 
     def get_success_url(self):
-        return reverse('question_detail', kwargs={'pk': self.object.pk})
+        return reverse('question_detail_img', kwargs={'pk': self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -13,7 +13,7 @@
             <p>正解：{{ imagequestion.answer_choice_no }}</p>
             <p>解説（正解）：{{ imagequestion.ok_comment|linebreaksbr }}</p>
             <p>解説（不正解）：{{ imagequestion.ng_comment|linebreaksbr }}</p>
-            <img src="/media/{{ imagequestion.avator }}">
+            <p>1行あたりの選択肢数：{{ imagequestion.wrap_back_num }}</p>
           </div>
           <div class="card-footer">
             <table class="table table-bordered">
