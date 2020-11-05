@@ -11,7 +11,7 @@
           <div class="card-body">
             <form method="post">
             {% csrf_token %}
-            <p>{{ object.body }}</p>
+            <p>{{ object.name }}</p>
             <p>を削除しますか？</p>
             <input class="btn btn-danger" type="submit" value="削除する">
         </div>

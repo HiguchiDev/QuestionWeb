@@ -9,7 +9,7 @@
       <div class="col-12">
         <div class="card card-default">
           <div class="card-body">
-            <form method="post" novalidate>
+            <form id="post_form" method="post" novalidate>
               {% csrf_token %}
               {{ form|crispy }}
               <button class="btn btn-primary" type="submit">送信</button>
@@ -28,7 +28,24 @@
 
 <script>
 $(function(){
-  $('#id_category_no').val({{ new_category_no }})
+  $('#id_category_no').val({{ new_category_no }});
+  $('#id_category_no').attr('readonly',true);
+  $('#id_CategoryGroup').attr('disabled',true);
+  
+  
+  $("option").each(function(i, o){
+    if($(o).text() == "{{ group_name }}"){
+      $(o).prop('selected', true);
+    }
+    else{
+      $(o).removeAttr('selected')
+    }
+  });
+  
+
+  $('#post_form').submit(function(){
+    $('#id_CategoryGroup').removeAttr('disabled');
+  });
 });
 </script>
 

@@ -25,6 +25,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
 
         context['new_category_no'] = CategoryGroup.objects.get(pk=self.kwargs.get('group_id')).category_set.all().count() + 1
+        context['group_name'] = CategoryGroup.objects.get(pk=self.kwargs.get('group_id')).name
         context['group_id'] = self.kwargs.get('group_id')
 
         return context
@@ -51,15 +52,13 @@ class CategoryDeleteView(DeleteView):
     template_name = 'question/category_delete.html'
     model = Category
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['group_id'] = Category.objects.get(pk=self.kwargs.get('pk')).CategoryGroup.id
-
-        return context
+    def delete(self, request, *args, **kwargs):
+        self.group_id = Category.objects.get(pk=self.kwargs.get('pk')).CategoryGroup.id
+        
+        return super().delete(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('category_list', kwargs={'group_id':self.kwargs.get('group_id')})
+        return reverse('category_list', kwargs={'group_id':self.group_id})
         
 class CategoryQuestionList(LoginRequiredMixin, ListView):
     model = Question
