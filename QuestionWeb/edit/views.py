@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView, DeleteView
 from extra_views import CreateWithInlinesView, InlineFormSetFactory, UpdateWithInlinesView
 from extra_views.generic import GenericInlineFormSetView
-from question.models import Question, TextChoice, Category, ImageQuestion, ImageChoice
+from question.models import Question, TextChoice, Category, ImageQuestion, ImageChoice, CategoryGroup
 from django.urls import reverse
 from django.forms import ModelForm, inlineformset_factory, Textarea
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,51 @@ class LoginRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    template_name = "question/category_create.html"
+    fields = ['name', 'category_no', 'CategoryGroup']
+ 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        context['new_category_no'] = CategoryGroup.objects.get(pk=self.kwargs.get('group_id')).category_set.all().count() + 1
+        context['group_id'] = self.kwargs.get('group_id')
+
+        return context
+
+    def get_success_url(self):
+        return reverse('category_list', kwargs={'group_id':self.kwargs.get('group_id')})
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Category
+    template_name = "question/category_update.html"
+    fields = ['name', 'CategoryGroup']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['group_id'] = self.kwargs.get('group_id')
+
+        return context
+ 
+    def get_success_url(self):
+        return reverse('category_list', kwargs={'group_id':self.kwargs.get('group_id')})
+
+class CategoryDeleteView(DeleteView):
+    template_name = 'question/category_delete.html'
+    model = Category
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['group_id'] = Category.objects.get(pk=self.kwargs.get('pk')).CategoryGroup.id
+
+        return context
+
+    def get_success_url(self):
+        return reverse('category_list', kwargs={'group_id':self.kwargs.get('group_id')})
+        
 class CategoryQuestionList(LoginRequiredMixin, ListView):
     model = Question
     template_name = "question/category_question_list.html"
@@ -54,9 +98,25 @@ class CategoryList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        context['group_id'] = self.kwargs.get('group_id')
 
         return context
 
+
+    def get_queryset(self):
+        group_id = self.kwargs.get('group_id')
+        category_list = Category.objects.filter(CategoryGroup_id=group_id)
+        
+        return category_list
+
+class CategoryGroupList(LoginRequiredMixin, ListView):
+    model = CategoryGroup
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
 
 
 class QuestionDetail(LoginRequiredMixin, DetailView):
@@ -209,6 +269,7 @@ class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_id'] = self.kwargs.get('category_id')
+        context['group_id'] = Category.objects.get(self.kwargs.get('category_id')).CategoryGroup_id
         
         return context
 

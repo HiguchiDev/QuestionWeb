@@ -1,0 +1,35 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}管理画面|カテゴリ新規作成{% endblock %}
+{% block page_title %}管理画面|カテゴリ新規作成{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+  <div class="border" style="padding:10px;">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-body">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {{ form|crispy }}
+              <button class="btn btn-primary" type="submit">送信</button>
+              &nbsp;&nbsp;
+              <a class="btn btn-primary" href="{% url 'category_list' group_id %}" role="button">キャンセル</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+$(function(){
+  $('#id_category_no').val({{ new_category_no }})
+});
+</script>
+
+{% endblock %}

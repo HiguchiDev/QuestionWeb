@@ -1,8 +1,19 @@
 from django.db import models
 
+class CategoryGroup(models.Model):
+    name = models.CharField('グループ名称', max_length=512, blank=False)
+
+    def __str__(self):
+        return self.name
+
+def set_default_cateory_group():
+    cateory_group, _ = CategoryGroup.objects.get_or_create(name='プリンセス別')
+    return cateory_group.id
+
 class Category(models.Model):
     name = models.CharField('カテゴリ名称', max_length=512, blank=False)
     category_no = models.PositiveSmallIntegerField(verbose_name='カテゴリNo.', default=1)
+    CategoryGroup = models.ForeignKey(CategoryGroup, on_delete=models.CASCADE, default=set_default_cateory_group)
 
     def __str__(self):
         return self.name

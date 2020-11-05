@@ -1,0 +1,29 @@
+{% extends 'question/base.html' %}
+{% block meta_title %}管理画面トップ|グループ一覧{% endblock %}
+{% block page_title %}管理画面トップ|グループ一覧{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr><th style="width:100%">グループ名称</th></tr>
+            </thead>
+            {% for group in object_list %}
+            <tr>
+                <td><a href="{% url 'category_list' group.pk %}">{{ group.name }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a class="btn btn-primary" href="{% url 'question_list' %}" role="button">すべての問題一覧</a>
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{% url 'question_create' %}" role="button">問題新規作成（選択肢：テキスト）</a>
+        <a class="btn btn-primary" href="{% url 'question_create_img' %}" role="button">問題新規作成（選択肢：画像）</a>
+        
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

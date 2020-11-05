@@ -1,25 +1,30 @@
 {% extends 'question/base.html' %}
-{% block meta_title %}管理画面トップ|カテゴリ一覧{% endblock %}
-{% block page_title %}管理画面トップ|カテゴリ一覧{% endblock %}
+{% block meta_title %}管理画面|カテゴリ一覧{% endblock %}
+{% block page_title %}管理画面|カテゴリ一覧{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
       <div class="col-12">
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
-                <tr><th style="width:10%">カテゴリNo.</th><th style="width:90%">カテゴリ名称</th></tr>
+                <tr><th style="width:10%">カテゴリNo.</th><th style="width:70%">カテゴリ名称</th><th style="width:20%">操作</th></tr>
             </thead>
             {% for category in object_list %}
             <tr>
                 <td>{{ category.category_no }}</td>
                 <td><a href="{% url 'category_question_list' category.pk %}">{{ category.name }}</a></td>
+                <td>
+                  <a class="btn btn-primary" href="{% url 'category_update' group_id category.pk %}" role="button">編集</a>
+                  <a class="btn btn-danger" href="{% url 'category_delete' category.pk %}" role="button">削除</a>
+                </td>
                 
             </tr>
             {% endfor %}
         </table>
-        <a class="btn btn-primary" href="{% url 'question_create' %}" role="button">問題新規作成（選択肢：テキスト）</a>
-        <a class="btn btn-primary" href="{% url 'question_create_img' %}" role="button">問題新規作成（選択肢：画像）</a>
-        <a class="btn btn-primary" href="{% url 'question_list' %}" role="button">すべての問題一覧</a>
+        <a class="btn btn-primary" href="{% url 'category_create' group_id %}" role="button">カテゴリ新規作成</a>
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{% url 'category_group_list' %}" role="button">管理トップに戻る</a>
       </div>
     </div>
 </div>
