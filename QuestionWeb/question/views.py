@@ -58,7 +58,6 @@ class QuestionView(TemplateView):
                     if q_id is not None:
                         random_question_id_list.append({'img' : q_id})
             
-            self.request.session.set_expiry(0)
             self.request.session['question_id_list'] = random_question_id_list
             
         
@@ -143,7 +142,6 @@ class AnswerResultView(TemplateView):
         ctx['category_id'] = self.kwargs.get('category_id')
 
         if self.kwargs.get('question_no') == QUESTION_MAX_QTY:
-            self.request.session.set_expiry(0)
             self.request.session['is_question_end'] = True
 
         return ctx
