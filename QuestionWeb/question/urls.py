@@ -9,5 +9,6 @@ urlpatterns = [
     path('session_expire', views.SessionExpireView.as_view(), name='session_expire'),
     path('top', views.TopPageView.as_view(), name='top'),
     path('question/stop', views.QuestionStopView.as_view(), name='stop'),
+    path('question/preparation', views.PreparationView.as_view(), name='preparation'),
 ]
 

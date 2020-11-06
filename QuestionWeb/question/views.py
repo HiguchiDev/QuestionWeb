@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from question.models import Question, TextChoice, Category, ImageQuestion
+from question.models import Question, TextChoice, Category, ImageQuestion, CategoryGroup
 import random
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse
@@ -12,7 +12,20 @@ QUESTION_MAX_QTY = 5
 class TopPageView(TemplateView):
     template_name = "top.html"
 
-    
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        princess_group = CategoryGroup.objects.get(name="プリンセス別")
+        ctx['princess_category_list'] = princess_group.category_set.all().order_by('category_no')
+
+        difficulty_group = CategoryGroup.objects.get(name="難易度別")
+        ctx['difficulty_category_list'] = difficulty_group.category_set.all().order_by('category_no')
+
+        field_group = CategoryGroup.objects.get(name="分野別")
+        ctx['field_category_list'] = field_group.category_set.all().order_by('category_no')
+
+        return ctx
+
 
 class QuestionView(TemplateView):
     template_name = "question_main.html"
@@ -20,6 +33,10 @@ class QuestionView(TemplateView):
     def get(self, request, **kwargs):
         
         question_no = kwargs.get('question_no')
+        category_id = kwargs.get('category_id')
+
+        if Category.objects.get(pk=category_id).question_set.all().count() < QUESTION_MAX_QTY:
+            return HttpResponseRedirect(reverse('preparation'))
 
         # セッション切れチェック
         if question_no == 1 and self.request.session.get('is_question_end', False) == False:
@@ -30,8 +47,6 @@ class QuestionView(TemplateView):
 
         elif question_no > QUESTION_MAX_QTY or self.request.session.get('is_question_end', False):
             return HttpResponseRedirect(reverse('stop'))
-
-        #ToDo : 紐づく問題が5問以下の場合はエラーとする。
 
         return super().get(request, **kwargs)
 
@@ -148,3 +163,6 @@ class AnswerResultView(TemplateView):
 
 class SessionExpireView(TemplateView):
     template_name = "session_expire.html"
+
+class PreparationView(TemplateView):
+    template_name = "question_preparation.html"

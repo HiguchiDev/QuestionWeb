@@ -1,0 +1,19 @@
+
+#stop_main_message {
+    font-size: 32px;
+    width: 680px;
+}
+
+#stop_sub_message {
+    font-size: 18px;
+}
+
+#main_row {
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.banner_row {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}

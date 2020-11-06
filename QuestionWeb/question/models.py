@@ -14,6 +14,23 @@ class Category(models.Model):
     name = models.CharField('カテゴリ名称', max_length=512, blank=False)
     category_no = models.PositiveSmallIntegerField(verbose_name='カテゴリNo.', default=1)
     CategoryGroup = models.ForeignKey(CategoryGroup, on_delete=models.CASCADE, default=set_default_cateory_group)
+    img = models.ImageField(verbose_name='画像', upload_to='images/', null=True)
+
+    def delete(self, using=None, keep_parents=False):
+        self.img.delete()
+
+        return super().delete(using, keep_parents)
+
+    def save(self, *args, **kwargs):
+        try:
+            original_profile = Category.objects.get(pk=self.pk)
+            if original_profile.img != self.img:
+                original_profile.img.delete(save=False)
+
+        except self.DoesNotExist:
+            pass
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -79,7 +96,7 @@ class ImageChoice(models.Model):
     def save(self, *args, **kwargs):
         try:
             original_profile = ImageChoice.objects.get(pk=self.pk)
-            if original_profile.img:
+            if original_profile.img != self.img:
                 original_profile.img.delete(save=False)
 
         except self.DoesNotExist:

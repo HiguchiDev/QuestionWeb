@@ -19,7 +19,7 @@ class LoginRequiredMixin(object):
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     template_name = "question/category_create.html"
-    fields = ['name', 'category_no', 'CategoryGroup']
+    fields = ['name', 'category_no', 'CategoryGroup', 'img']
  
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,7 +36,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     template_name = "question/category_update.html"
-    fields = ['name', 'CategoryGroup']
+    fields = ['name', 'CategoryGroup', 'img']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,7 +59,7 @@ class CategoryDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('category_list', kwargs={'group_id':self.group_id})
-        
+
 class CategoryQuestionList(LoginRequiredMixin, ListView):
     model = Question
     template_name = "question/category_question_list.html"

@@ -62,163 +62,45 @@
 
 <div class="container sp_category_icons d-md-none d-block">
     <div class="row justify-content-center category_icon_raw">
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    </div>
 
-    <div class="row justify-content-center category_icon_raw">
+    {% for princess_category in princess_category_list %}
         <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
+            <a href="{% url 'question' princess_category.pk 1 %}">
+                <img class="card-img" src="/media/{{ princess_category.img }}" alt="">
                 <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
+                <h4 class="text-white"><b>{{ princess_category.name }}</b></h4>
                 </div>
             </a>
         </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="row justify-content-center category_icon_raw">
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
+        
+        {% if forloop.counter|divisibleby:2 %}
             </div>
-            </a>
-        </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="row justify-content-center category_icon_raw">
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
+            <div class="row justify-content-center category_icon_raw">
+        {% endif %}
+    {% endfor %}
     </div>
 </div>
 
 <div class="container pc_category_icons d-none d-md-block">
     <div class="row justify-content-center category_icon_raw">
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
+
+        {% for princess_category in princess_category_list %}
+            <div class="card category_icon_rap border-light">
+                <a href="{% url 'question' princess_category.pk 1 %}">
+                    <img class="card-img" src="/media/{{ princess_category.img }}" alt="">
+                    <div class="card-img-overlay">
+                    <h4 class="text-white"><b>{{ princess_category.name }}</b></h4>
+                    </div>
+                </a>
+            </div>
+            
+            {% if forloop.counter|divisibleby:4 %}
                 </div>
-            </a>
+                <div class="row justify-content-center category_icon_raw">
+            {% endif %}
+        {% endfor %}
         </div>
     
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 2 1 %}">
-                <img class="card-img" src="{% static "shirayukiyume.png" %}" alt="">
-                <div class="card-img-overlay">
-                <h4 class="text-white"><b>白雪姫</b></h4>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="row justify-content-center category_icon_raw">
-        
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-        
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-
-        <div class="card category_icon_rap border-light">
-            <a href="{% url 'question' 1 1 %}">
-            <img class="card-img" src="{% static "shinderera.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>シンデレラ</b></h4>
-            </div>
-            </a>
-        </div>
-    </div>
 </div>
 
 <div class="container-fluid">
@@ -233,20 +115,22 @@
     </div>
 
     <div class="row justify-content-center nanido_bunya_row">
-        <div class="card buya_card border-light">
-            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>仮</b></h4>
+        {% for difficulty_category in difficulty_category_list %}
+            <div class="card buya_card border-light">
+                <a href="{% url 'question' difficulty_category.pk 1 %}">
+                    <img class="card-img bunya" src="/media/{{ difficulty_category.img }}" alt="">
+                    <div class="card-img-overlay">
+                        <h4 class="text-white"><b>{{ difficulty_category.name }}</b></h4>
+                    </div>
+                </a>
             </div>
+            
+            {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row justify-content-center nanido_bunya_row">
+            {% endif %}
+        {% endfor %}
         </div>
-    
-        <div class="card buya_card border-light">
-            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>仮</b></h4>
-            </div>
-        </div>
-    </div>
     
     <div class="row category_bar_rap">
         <div class="d-flex justify-content-center align-items-center">
@@ -259,20 +143,23 @@
     </div>
 
     <div class="row justify-content-center nanido_bunya_row">
-        <div class="card buya_card border-light">
-            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>仮</b></h4>
+
+        {% for field_category in field_category_list %}
+            <div class="card buya_card border-light">
+                <a href="{% url 'question' field_category.pk 1 %}">
+                    <img class="card-img bunya" src="/media/{{ field_category.img }}" alt="">
+                    <div class="card-img-overlay">
+                        <h4 class="text-white"><b>{{ field_category.name }}</b></h4>
+                    </div>
+                </a>
             </div>
+            
+            {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row justify-content-center nanido_bunya_row">
+            {% endif %}
+        {% endfor %}
         </div>
-    
-        <div class="card buya_card border-light">
-            <img class="card-img bunya" src="{% static "mitei.png" %}" alt="">
-            <div class="card-img-overlay">
-            <h4 class="text-white"><b>仮</b></h4>
-            </div>
-        </div>
-    </div>
 
     <div class="row justify-content-center banner_row">
         <div class="card border-light banner_sp d-md-none d-block">
