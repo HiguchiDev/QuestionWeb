@@ -15,6 +15,28 @@ class TopPageView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
+        sample_category = CategoryGroup.objects.get(name="サンプル問題").category_set.all().first() #サンプル問題カテゴリのみのはず。
+        rand_int = random.randint(0, 1)
+
+        # text優先
+        if rand_int == 0:
+            if sample_category.question_set.all().count() > 0:
+                question_rand_int = rand_int = random.randint(0, sample_category.question_set.all().count() - 1)
+                ctx['sample_question'] = sample_category.question_set.all()[question_rand_int]
+                
+            elif sample_category.imagequestion_set.all().count() > 0:
+                question_rand_int = rand_int = random.randint(0, sample_category.imagequestion_set.all().count() - 1)
+                ctx['sample_question'] = sample_category.imagequestion_set.all()[question_rand_int]
+
+        #image優先
+        elif rand_int == 1:
+            if sample_category.imagequestion_set.all().count() > 0:
+                question_rand_int = rand_int = random.randint(0, sample_category.imagequestion_set.all().count() - 1)
+                ctx['sample_question'] = sample_category.imagequestion_set.all()[question_rand_int]
+            elif sample_category.question_set.all().count() > 0:
+                question_rand_int = rand_int = random.randint(0, sample_category.question_set.all().count() - 1)
+                ctx['sample_question'] = sample_category.question_set.all()[question_rand_int]
+
         princess_group = CategoryGroup.objects.get(name="プリンセス別")
         ctx['princess_category_list'] = princess_group.category_set.all().order_by('category_no')
 

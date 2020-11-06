@@ -11,14 +11,19 @@
 <div class="jumbotron d-md-none d-block sp_bg">
     <div class="container-fluid">
       <div class="row" id="sample_question">
-        <div class="col-12"><h2 class="text-center"><b>Q:シンデレラのドレスの色はどれ？</b></h2></div>
+        <div class="col-12"><h2 class="text-center"><b>Q:{{ sample_question.body }}</b></h2></div>
       </div>
       <div class="row" id="sample_choice">
         <div class="col-12">
           <div class="d-flex justify-content-center">
-            <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
-            <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
-            <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+            {% for choice in sample_question.textchoice_set.all %}
+                <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
+                <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
+                <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+            {% endfor %}
+            {% for choice in sample_question.imagechoice_set.all %}
+                <div><img src="/media/{{ choice.img }}" class="choice_image"></div>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -31,14 +36,17 @@
 <div class="jumbotron d-none d-md-block pc_bg">
     <div class="container-fluid">
       <div class="row" id="sample_question">
-        <div class="col-12"><h2 class="text-center"><b>Q:シンデレラのドレスの色はどれ？</b></h2></div>
+        <div class="col-12"><h2 class="text-center"><b>Q:{{ sample_question.body }}</b></h2></div>
       </div>
       <div class="row" id="sample_choice">
         <div class="col-12">
           <div class="d-flex justify-content-center">
-            <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
-            <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
-            <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+            {% for choice in sample_question.textchoice_set.all %}
+                <div><p>{{ choice.body }}</p></div><br>
+            {% endfor %}
+            {% for choice in sample_question.imagechoice_set.all %}
+                <div><img src="/media/{{ choice.img }}" class="choice_image"></div>
+            {% endfor %}
           </div>
         </div>
       </div>
