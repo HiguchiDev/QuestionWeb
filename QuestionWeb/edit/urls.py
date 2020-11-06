@@ -26,6 +26,8 @@ urlpatterns = [
     path('category/create/<int:group_id>', views.CategoryCreateView.as_view(), name='category_create'),
     path('category/delete/<int:pk>', views.CategoryDeleteView.as_view(), name='category_delete'),
 
+    path('category/sort/<int:pk>', views.CategoryGroupUpdateFormsetView.as_view(), name='category_sort'),
+
     
 
     

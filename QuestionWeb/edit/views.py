@@ -97,15 +97,13 @@ class CategoryList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
         context['group_id'] = self.kwargs.get('group_id')
 
         return context
 
-
     def get_queryset(self):
         group_id = self.kwargs.get('group_id')
-        category_list = Category.objects.filter(CategoryGroup_id=group_id)
+        category_list = Category.objects.filter(CategoryGroup_id=group_id).order_by('category_no')
         
         return category_list
 
@@ -149,6 +147,18 @@ class ImageQuestionDetail(LoginRequiredMixin, DetailView):
             context["category_name"] = Category.objects.get(pk=self.kwargs.get('category_id')).name
         
         return context
+
+class CategoryForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = Category
+        fields = ("category_no", "name")
+
 
 class TextChoiceForm(ModelForm):
 
@@ -200,6 +210,12 @@ class ImageChoiceInlineFormSetForCreate(InlineFormSetFactory):
                       'can_order': False, 'can_delete': True}
     #formset_kwargs = {'auto_id': 'my_id_%s'}
 
+class CategoryInlineFormSetForUpdate(InlineFormSetFactory):
+
+    model = Category
+    form_class = CategoryForm
+    factory_kwargs = {'extra': 0, 'max_num': None,
+                      'can_order': False, 'can_delete': False}
 
 class TextChoiceInlineFormSetForUpdate(InlineFormSetFactory):
 
@@ -215,6 +231,17 @@ class ImageChoiceInlineFormSetForUpdate(InlineFormSetFactory):
     factory_kwargs = {'extra': 0, 'max_num': None,
                       'can_order': False, 'can_delete': True}
 
+
+class CategoryGroupForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryGroupForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = CategoryGroup
+        fields = ['name',]
 
 class QuestionForm(ModelForm):
 
@@ -323,6 +350,15 @@ class ImageQuestionUpdateFormsetView(LoginRequiredMixin, UpdateWithInlinesView):
         
         return context
 
+class CategoryGroupUpdateFormsetView(LoginRequiredMixin, UpdateWithInlinesView):
+    model = CategoryGroup
+    form_class = CategoryGroupForm
+
+    inlines = [CategoryInlineFormSetForUpdate, ]
+    template_name = "question/category_sort.html"
+
+    def get_success_url(self):
+        return reverse('category_list', kwargs={'group_id': self.object.pk})
 
 class QuestionDeleteView(DeleteView):
     template_name = 'question/question_delete.html'
