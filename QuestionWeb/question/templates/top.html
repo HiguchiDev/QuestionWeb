@@ -15,16 +15,38 @@
       </div>
       <div class="row" id="sample_choice">
         <div class="col-12">
-          <div class="d-flex justify-content-center">
+          
+            {% if sample_question.textchoice_set.all %}
+              <div class="row">
+                {% if sample_question.question_disp_type.name == '左寄せ' %}
+                  <div class="col text-left">
+                {% else %}
+                  <div class="col text-center">
+                {% endif %}
+            {% endif %}
             {% for choice in sample_question.textchoice_set.all %}
-                <div><img src="{% static "Ellipse1.png" %}" class="choice_image"></div>
-                <div><img src="{% static "Ellipse2.png" %}" class="choice_image"></div>
-                <div><img src="{% static "Ellipse3.png" %}" class="choice_image"></div>
+              <div class="sample_text_choice">{{ forloop.counter }}.&nbsp;{{ choice.body }}</div>
             {% endfor %}
+
+            {% if sample_question.textchoice_set.all %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if sample_question.imagechoice_set.all %}
+              <div class="d-flex justify-content-center">
+            {% endif %}
             {% for choice in sample_question.imagechoice_set.all %}
+              
                 <div><img src="/media/{{ choice.img }}" class="choice_image"></div>
+
+                {% if forloop.counter == sample_question.imagechoice_set.all|length %}
+                  
+                {% endif %}
             {% endfor %}
-          </div>
+            {% if sample_question.imagechoice_set.all %}
+              </div>
+            {% endif %}
         </div>
       </div>
       <div class="row" id="sample_answer">
@@ -40,14 +62,41 @@
       </div>
       <div class="row" id="sample_choice">
         <div class="col-12">
-          <div class="d-flex justify-content-center">
+          
+            {% if sample_question.textchoice_set.all %}
+              <div class="row">
+                <div class="col-3"></div>
+                {% if sample_question.question_disp_type.name == '左寄せ' %}
+                  <div class="col-6 text-left">
+                {% else %}
+                  <div class="col-6 text-center">
+                {% endif %}
+                <div class="col-3"></div>
+            {% endif %}
             {% for choice in sample_question.textchoice_set.all %}
-                <div><p>{{ choice.body }}</p></div><br>
+            
+              <div class="sample_text_choice"><p>{{ forloop.counter }}. {{ choice.body }}</p></div>
             {% endfor %}
+
+            {% if sample_question.textchoice_set.all %}
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if sample_question.imagechoice_set.all %}
+              <div class="d-flex justify-content-center">
+            {% endif %}
             {% for choice in sample_question.imagechoice_set.all %}
+              
                 <div><img src="/media/{{ choice.img }}" class="choice_image"></div>
+
+                {% if forloop.counter == sample_question.imagechoice_set.all|length %}
+                  
+                {% endif %}
             {% endfor %}
-          </div>
+            {% if sample_question.imagechoice_set.all %}
+              </div>
+            {% endif %}
         </div>
       </div>
       <div class="row" id="sample_answer">

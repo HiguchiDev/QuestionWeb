@@ -45,9 +45,7 @@
           </tr>
             {% endfor %}
         </table>
-        
 
-        
       </div>
     </div>
     <div class="row">
@@ -65,7 +63,10 @@
 $(function(){
     $('.action_form').submit(function(){
         question_qty = $('.question_tr').length;
-        console.log(question_qty)
+        
+        if({{category.name}} == "サンプル問題"){
+          return true;
+        }
 
         if(question_qty <= 5) {
             alert("問題は最低でも5問必要です。");

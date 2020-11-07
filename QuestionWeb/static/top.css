@@ -100,3 +100,9 @@
 .sp_footer_bg {
     margin-bottom: 0px;
 }
+
+.sample_text_choice {
+    font-size: 18px;
+    white-space: normal;
+    word-break: break-all;
+}
