@@ -13,11 +13,8 @@
             <div class="card mx-auto border-light question_card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col text-center body_text_pc d-none d-md-block">
-                            <div id="question_body"><b>Q:{{ question.body | linebreaksbr }}</b></div>
-                        </div>
-                        <div class="col body_text_sp d-md-none d-block">
-                            <div id="question_body"><b>Q:{{ question.body | linebreaksbr }}</b></div>
+                        <div class="col text-center">
+                            <b><div class="question_body">Q:{{ question.body | linebreaksbr }}</div></b>
                         </div>
                     </div>
                     {% if question_type == 'text' %}
@@ -27,13 +24,14 @@
                                     <div class="col text-left choice_text choice_col_pc d-none d-md-block">
                                         <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto choice_card_body_pc">
-                                                <div class="card-text">
+                                                <div class="card-text choice_wrapper" >
                                                     <div class="row">
                                                         <div class="col-1">
                                                             <span class="choice_no_wrapper">{{ textchoice.choice_no }}.&nbsp;</span>
                                                         </div>
                                                         <div class="col-11">
-                                                            {{ textchoice.body | linebreaksbr }}
+                                                            <div class="textchoice_kanji">{{ textchoice.body | linebreaksbr }}</div>
+                                                            <div style="display: none;" class="textchoice_kana">{{ textchoice.body_kana | linebreaksbr }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -44,7 +42,11 @@
                                     <div class="col text-left choice_text choice_col_sp d-md-none d-block">
                                         <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body">
-                                                <div class="card-text">{{ textchoice.choice_no }}.&nbsp;{{ textchoice.body | linebreaksbr }}</div>
+                                                <div class="card-text choice_wrapper">
+                                                    {{ textchoice.choice_no }}.&nbsp;
+                                                    <span class="textchoice_kanji">{{ textchoice.body | linebreaksbr }}</span>
+                                                    <span style="display: none;" class="textchoice_kana">{{ textchoice.body_kana | linebreaksbr }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -53,10 +55,12 @@
                                     <div class="col text-center choice_text choice_col_pc d-none d-md-block">
                                         <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto choice_card_body_pc">
-                                                <div class="card-text">
+                                                <div class="card-text choice_wrapper">
                                                     <div class="row">
                                                         <div class="col">
-                                                            <span class="choice_no_wrapper">{{ textchoice.choice_no }}.&nbsp;</span>{{ textchoice.body | linebreaksbr }}
+                                                            <span class="choice_no_wrapper">{{ textchoice.choice_no }}.&nbsp;</span>
+                                                            <span class="textchoice_kanji">{{ textchoice.body | linebreaksbr }}</span>
+                                                            <span style="display: none;" class="textchoice_kana">{{ textchoice.body_kana | linebreaksbr }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,7 +71,10 @@
                                     <div class="col text-center choice_text choice_col_sp d-md-none d-block">
                                         <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto">
-                                                <div class="card-text">{{ textchoice.choice_no }}.&nbsp;{{ textchoice.body | linebreaksbr }}</div>
+                                                <div class="card-text choice_wrapper">{{ textchoice.choice_no }}.&nbsp;
+                                                    <span class="textchoice_kanji">{{ textchoice.body | linebreaksbr }}</span>
+                                                    <span style="display: none;" class="textchoice_kana">{{ textchoice.body_kana | linebreaksbr }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -100,6 +107,12 @@
                     <div class="row">
                         <div class="col text-center">
                             <button id="decision_btn" type="button" class="btn"><b>けってい</b></button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col text-center">
+                            <button id="kanji_hiragana_toggle" type="button" class="btn bg-white">ひらがなにする</button>
                         </div>
                     </div>
                 </div>  
@@ -161,6 +174,57 @@
             $("#decision_btn").prop("disabled", false);
             $("#decision_btn").prop("disabled", false);
         });
+
+        var is_kana = true;
+
+        $(document).on('click', '#kanji_hiragana_toggle', function() {
+            $('#kanji_hiragana_toggle').fadeOut(500, function() {
+                if (is_kana){
+                        $('#kanji_hiragana_toggle').text("漢字にする")
+                }
+                else{
+                    $('#kanji_hiragana_toggle').text("ひらがなにする")
+                }
+                $('#kanji_hiragana_toggle').fadeIn(500, function() {
+                    if(is_kana){
+                        is_kana = false;
+                    }
+                    else{
+                        is_kana = true;
+                    }
+                });
+            }); 
+
+            $('.question_body').fadeOut(500, function() {
+
+                if (is_kana){
+                    $('.question_body').text("Q:{{ question.body_kana | linebreaksbr }}")
+                }
+                else{
+                    $('.question_body').text("Q:{{ question.body | linebreaksbr }}")
+                }
+
+                $('.question_body').fadeIn(500, function() {
+
+                });
+            }); 
+
+            $(".choice_wrapper").fadeOut(500, function() {
+                if (is_kana){
+                    $(".textchoice_kanji").hide();
+                    $(".textchoice_kana").show();
+                }
+                else {
+                    $(".textchoice_kanji").show();
+                    $(".textchoice_kana").hide();
+                }
+                $(".choice_wrapper").fadeIn(500, function() {
+                    
+                });
+            });
+        });
+
+        
     });
 </script>
 {% endblock %}

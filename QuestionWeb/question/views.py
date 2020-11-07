@@ -104,6 +104,12 @@ class QuestionView(TemplateView):
         if 'text' in question_id_dict:
             ctx['question'] = Question.objects.get(pk=question_id_dict['text'])
             ctx['question_type'] = 'text'
+
+            choice_num = 1
+            for choice in ctx['question'].textchoice_set.all():
+                ctx['choice_body_kaba_' + str(choice_num)] = choice.body_kana
+                choice_num += 1
+
         elif 'img' in question_id_dict:
             ctx['question'] = ImageQuestion.objects.get(pk=question_id_dict['img'])
             ctx['question_type'] = 'img'

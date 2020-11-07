@@ -16,7 +16,7 @@
     border-radius: 1rem !important;
 }
 
-#question_body {
+.question_body {
     font-size: 32px;
     margin-bottom: 30px;
 }
@@ -86,4 +86,8 @@ footer {
 
 .card-text {
     word-break: break-all;
+}
+
+#kanji_hiragana_toggle {
+    margin-top: 25px;
 }
