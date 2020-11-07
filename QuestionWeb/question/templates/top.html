@@ -50,7 +50,11 @@
         </div>
       </div>
       <div class="row" id="sample_answer">
-        <div class="col-12"><h5 class="text-right"><b>正解を見る</b></h5></div>
+        {% if sample_question.textchoice_set.all %}
+          <div class="col-12"><h5 class="text-right"><b><a href="{% url 'sample_answer' 'text' sample_question.pk %}">正解を見る</a></b></h5></div>
+        {% elif sample_question.imagechoice_set.all %}
+          <div class="col-12"><h5 class="text-right"><b><a href="{% url 'sample_answer' 'img' sample_question.pk %}">正解を見る</a></b></h5></div>
+        {% endif %}
       </div>
     </div>
 </div>
@@ -100,7 +104,12 @@
         </div>
       </div>
       <div class="row" id="sample_answer">
-        <div class="col-12"><h5 class="text-center"><b>正解を見る</b></h5></div>
+        {% if sample_question.textchoice_set.all %}
+          <div class="col-12"><h5 class="text-center"><b><a href="{% url 'sample_answer' 'text' sample_question.pk %}">正解を見る</a></b></h5></div>
+        {% elif sample_question.imagechoice_set.all %}
+          <div class="col-12"><h5 class="text-center"><b><a href="{% url 'sample_answer' 'img' sample_question.pk %}">正解を見る</a></b></h5></div>
+        {% endif %}
+        
       </div>
     </div>
 </div>

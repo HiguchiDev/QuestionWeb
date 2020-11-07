@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block meta_title %}正解{% endblock %}
+
+{% load static %}
+{% block css %}
+<link href="{% static 'sample_answer.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="main">
+    <div class="container">
+        <div class="card mx-auto border-light question_card">
+            <div class="card-body">
+                <div class="row" id="main_row">
+                    <div class="col text-center" id="main_message">
+                        <p><b>{{ question.ng_comment }}</b></p>
+                    </div>
+                </div>
+                <div class="row" id="sample_choice">
+                    <div class="col-12">
+                    
+                        {% if question.textchoice_set.all %}
+                        <div class="row">
+                            {% if question.question_disp_type.name == '左寄せ' %}
+                            <div class="col text-left">
+                            {% else %}
+                            <div class="col text-center">
+                            {% endif %}
+                        {% endif %}
+                        {% for choice in question.textchoice_set.all %}
+                        {% if forloop.counter == question.answer_choice_no %}
+                            <div class="sample_text_choice">{{ forloop.counter }}.&nbsp;{{ choice.body }}</div>
+                        {% endif %}
+                        
+                        {% endfor %}
+            
+                        {% if question.textchoice_set.all %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if question.imagechoice_set.all %}
+                        <div class="d-flex justify-content-center">
+                        {% endif %}
+                        {% for choice in question.imagechoice_set.all %}
+                            {% if forloop.counter == question.answer_choice_no %}
+                                <div><img src="/media/{{ choice.img }}" class="choice_image"></div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.imagechoice_set.all %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col text-center">
+                        <a id="next_btn" class="btn" href="{% url 'question' princess_category.pk 1 %}" role="button"><b>シンデレラのもんだいをはじめる！</b></a>
+                    </div>
+                </div>
+
+                <div class="row" id="home_link_row">
+                    <div class="col text-center">
+                        <a id="home_link" href="{% url 'top' %}">> ホームに戻る</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<div class="container">
+    <div class="row justify-content-center banner_row">
+        <div class="card border-light banner_sp d-md-none d-block">
+            <img class="card-img" src="{% static "banner_sp.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+
+        <div class="card border-light banner_pc d-none d-md-block">
+            <img class="card-img" src="{% static "banner.png" %}" alt="">
+            <div class="card-img-overlay">
+            <h4 class="text-white"><b>バナー</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -10,5 +10,6 @@ urlpatterns = [
     path('top', views.TopPageView.as_view(), name='top'),
     path('question/stop', views.QuestionStopView.as_view(), name='stop'),
     path('question/preparation', views.PreparationView.as_view(), name='preparation'),
+    path('sample/answer/<str:question_type>/<int:question_id>', views.SampleAnswerView.as_view(), name='sample_answer'),
 ]
 

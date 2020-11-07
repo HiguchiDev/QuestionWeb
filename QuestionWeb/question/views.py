@@ -188,3 +188,19 @@ class SessionExpireView(TemplateView):
 
 class PreparationView(TemplateView):
     template_name = "question_preparation.html"
+
+class SampleAnswerView(TemplateView):
+    template_name = "sample_answer.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        
+        if self.kwargs.get('question_type') == 'text':
+            question = Question.objects.get(pk=self.kwargs.get('question_id'))
+        elif self.kwargs.get('question_type') == 'img':
+            question = ImageQuestion.objects.get(pk=self.kwargs.get('question_id'))
+
+        ctx['princess_category'] = Category.objects.get(name="シンデレラ")
+        ctx['question'] = question
+
+        return ctx

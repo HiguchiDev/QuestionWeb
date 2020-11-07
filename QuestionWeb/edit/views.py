@@ -295,7 +295,6 @@ class QuestionCreateFormsetView(LoginRequiredMixin, CreateWithInlinesView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_id'] = self.kwargs.get('category_id')
-        context['group_id'] = Category.objects.get(self.kwargs.get('category_id')).CategoryGroup_id
         
         return context
 
