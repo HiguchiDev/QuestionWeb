@@ -102,3 +102,11 @@ body,
 footer {
   margin-top: auto;
 }
+
+*:focus {
+    outline: none !important;
+  }
+
+*:focus {
+    box-shadow:none !important;
+}
