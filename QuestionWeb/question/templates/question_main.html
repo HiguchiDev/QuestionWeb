@@ -145,6 +145,7 @@
 {% block js %}
 <script>
     $(function(){
+        
         $("#decision_btn").prop("disabled", true);
         var default_url = "{% url 'answer_result' category.id question.id question_no question_type 99999 %}"
         var next_url = default_url

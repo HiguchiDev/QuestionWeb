@@ -210,3 +210,7 @@ class SampleAnswerView(TemplateView):
         ctx['question'] = question
 
         return ctx
+
+
+class SandView(TemplateView):
+    template_name = "sand.html"
