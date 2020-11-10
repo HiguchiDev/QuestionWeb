@@ -154,6 +154,9 @@
         var skip_qty = 0;
 
         $("#main").on("swiperight",function(){
+            var width = $('.question_card').width();
+            $('#question').removeClass('row');
+            $('.question_card').width(width);
             $("#main").addClass('rotate-left').delay(700).fadeOut(1);
             skip_qty++;
         });
