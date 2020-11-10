@@ -92,7 +92,6 @@ a:link, a:visited, a:hover, a:active {
     font-size: 30px;
 }
 
-body,
 #body_wrapper {
   display: flex;
   flex-direction: column;

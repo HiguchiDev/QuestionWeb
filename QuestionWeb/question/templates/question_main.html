@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div id="main">
     <div class="container">
         <div class="row" id="question">
@@ -142,12 +143,23 @@
 </div>
 {% endblock %}
 
+{% block jquery %}
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+{% endblock %}
+
 {% block js %}
 <script>
     $(function(){
+        var skip_qty = 0;
+
+        $("#main").on("swiperight",function(){
+            $("#main").addClass('rotate-left').delay(700).fadeOut(1);
+            skip_qty++;
+        });
         
         $("#decision_btn").prop("disabled", true);
-        var default_url = "{% url 'answer_result' category.id question.id question_no question_type 99999 %}"
+        var default_url = "{% url 'answer_result' category.id 987654321 123456789 question_type 99999 %}"
         var next_url = default_url
 
         $('#decision_btn').click(function() {
@@ -170,7 +182,10 @@
             });
 
             next_url = default_url
+            next_url = next_url.replace("987654321", {{ question.id }});
+            next_url = next_url.replace("123456789", {{ question_no }} + skip_qty);
             next_url = next_url.replace("99999", $(this).attr('name'));
+            console.log(next_url);
 
             $("#decision_btn").prop("disabled", false);
             $("#decision_btn").prop("disabled", false);

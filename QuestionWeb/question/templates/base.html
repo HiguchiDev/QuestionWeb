@@ -102,7 +102,9 @@
 </footer>
 
 {% block foot_scripts %}
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  {% block jquery %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  {% endblock %}
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
