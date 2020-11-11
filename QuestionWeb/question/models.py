@@ -56,6 +56,7 @@ class Question(models.Model):
     ok_comment = models.CharField('解説（正解の場合）', max_length=1024, default="")
     ng_comment = models.CharField('解説（不正解の場合）', max_length=1024, default="")
     question_disp_type = models.ForeignKey(QuestionDispType, on_delete=models.SET_DEFAULT, default=set_default_disp_type)
+    choice_type = models.CharField('選択肢のタイプ', max_length=1024, default="text")
 
     def __str__(self):
         return self.body
@@ -79,6 +80,7 @@ class ImageQuestion(models.Model):
     ok_comment = models.CharField('解説（正解の場合）', max_length=1024, default="")
     ng_comment = models.CharField('解説（不正解の場合）', max_length=1024, default="")
     wrap_back_num = models.PositiveSmallIntegerField(verbose_name='1行の最大の選択肢数.', default=3)
+    choice_type = models.CharField('選択肢のタイプ', max_length=1024, default="img")
 
     def __str__(self):
         return self.body

@@ -2,7 +2,7 @@
     background-color: #EFF6F4;
 }
 
-#question {
+.question {
     margin-top: 50px;
     margin-left: 0px;
     margin-right: 0px;
@@ -17,6 +17,11 @@
 }
 
 .question_body {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.question_body_kana {
     font-size: 32px;
     margin-bottom: 30px;
 }
@@ -38,7 +43,7 @@ footer {
     background-color: #EFF6F4;
 }
 
-#decision_btn {
+.decision_btn {
     margin-top: 25px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -48,6 +53,10 @@ footer {
     font-size: 18px;
     color: #FBFBFB;
     background-color: #0EC0AB;
+}
+
+.skip {
+    margin-top: 25px;
 }
 
 .choice_no_wrapper {
@@ -88,14 +97,18 @@ footer {
     word-break: break-all;
 }
 
-#kanji_hiragana_toggle {
+.kanji_hiragana_toggle {
     margin-top: 25px;
 }
 
 .rotate-left {
-    transform: rotate(30deg) scale(0.8);
-    transition: 1s;
+    transform: rotate(25deg) scale(0.8);
+    transition: 0.75s;
     margin-left: 400px;
     opacity: 0;
     z-index: 10;
+}
+
+.skip_error {
+    color: red;
 }

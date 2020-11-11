@@ -57,7 +57,10 @@ class QuestionView(TemplateView):
         question_no = kwargs.get('question_no')
         category_id = kwargs.get('category_id')
 
-        if Category.objects.get(pk=category_id).question_set.all().count() < QUESTION_MAX_QTY:
+        question_qty = Category.objects.get(pk=category_id).question_set.all().count()
+        question_qty += Category.objects.get(pk=category_id).imagequestion_set.all().count()
+
+        if question_qty < QUESTION_MAX_QTY:
             return HttpResponseRedirect(reverse('preparation'))
 
         # セッション切れチェック
@@ -67,7 +70,7 @@ class QuestionView(TemplateView):
         elif question_no != 1 and not self.request.session.get('question_id_list', False):
             return HttpResponseRedirect(reverse('session_expire'))
 
-        elif question_no > QUESTION_MAX_QTY or self.request.session.get('is_question_end', False):
+        elif self.request.session.get('is_question_end', False):
             return HttpResponseRedirect(reverse('stop'))
 
         return super().get(request, **kwargs)
@@ -79,42 +82,34 @@ class QuestionView(TemplateView):
         category = Category.objects.get(pk=self.kwargs.get('category_id'))
 
         if not self.request.session.get('question_id_list', False):
-            while(len(random_question_id_list) < QUESTION_MAX_QTY):
-                
-                # TextQuestion
-                if random.randint(0, 1) == 0 and category.question_set.all().count() > 0:
-                    q_id = self.__get_text_question_id(random_question_id_list, category)
-                    
-                    if q_id is not None:
-                        random_question_id_list.append({'text' : q_id})
-                    
-                # ImageQuestion
-                elif random.randint(0, 1) == 1 and category.imagequestion_set.all().count() > 0:
-                    q_id = self.__get_img_question_id(random_question_id_list, category)
-                    
-                    if q_id is not None:
-                        random_question_id_list.append({'img' : q_id})
+            for q in category.question_set.all():
+                random_question_id_list.append({'text' : q.id})
+            
+            for q in category.imagequestion_set.all():
+                random_question_id_list.append({'img' : q.id})
+
+            random.shuffle(random_question_id_list)
             
             self.request.session['question_id_list'] = random_question_id_list
             
         
         question_id_list = self.request.session.get('question_id_list')
-        question_id_dict = question_id_list[self.kwargs.get('question_no') - 1]
+        q_no = self.kwargs.get('question_no')
 
-        if 'text' in question_id_dict:
-            ctx['question'] = Question.objects.get(pk=question_id_dict['text'])
-            ctx['question_type'] = 'text'
+        rem_question_id_list = question_id_list[(q_no-1):]
 
-            choice_num = 1
-            for choice in ctx['question'].textchoice_set.all():
-                ctx['choice_body_kaba_' + str(choice_num)] = choice.body_kana
-                choice_num += 1
+        question_list = []
 
-        elif 'img' in question_id_dict:
-            ctx['question'] = ImageQuestion.objects.get(pk=question_id_dict['img'])
-            ctx['question_type'] = 'img'
+        for q_id_dic in rem_question_id_list:
+            if 'text' in q_id_dic:
+                question_list.append(Question.objects.get(pk=q_id_dic['text']))
+            elif 'img' in q_id_dic:
+                question_list.append(ImageQuestion.objects.get(pk=q_id_dic['img']))
 
         ctx['category'] = category
+
+        ctx['question_list'] = question_list
+        ctx['rem_res_cnt'] = QUESTION_MAX_QTY - self.request.session.get('res_cnt', 0)
 
         return ctx
 
@@ -184,7 +179,11 @@ class AnswerResultView(TemplateView):
         ctx['question'] = question
         ctx['category_id'] = self.kwargs.get('category_id')
 
-        if self.kwargs.get('question_no') == QUESTION_MAX_QTY:
+        res_cnt = self.request.session.get('res_cnt', 0)
+        res_cnt += 1
+        self.request.session['res_cnt'] = res_cnt
+
+        if res_cnt >= QUESTION_MAX_QTY:
             self.request.session['is_question_end'] = True
 
         return ctx

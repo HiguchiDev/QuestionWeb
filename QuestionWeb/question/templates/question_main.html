@@ -8,22 +8,31 @@
 
 {% block content %}
 
-<div id="main">
+{% for question in question_list %}
+
+{% if forloop.counter == 1 %}
+    <div id="main_{{ forloop.counter }}">
+{% else %}
+    <div id="main_{{ forloop.counter }}" style="display: none;">
+{% endif %}
+    <div hidden id="q_id_{{ forloop.counter }}">{{ question.pk }}</div>
+    <div hidden id="c_type_{{ forloop.counter }}">{{ question.choice_type }}</div>
     <div class="container">
-        <div class="row" id="question">
+        <div class="row question">
             <div class="card mx-auto border-light question_card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col text-center">
+                        <div class="col text-center question_body_wrapper">
                             <b><div class="question_body">Q:{{ question.body | linebreaksbr }}</div></b>
+                            <b><div style="display: none;" class="question_body_kana">Q:{{ question.body_kana | linebreaksbr }}</div></b>
                         </div>
                     </div>
-                    {% if question_type == 'text' %}
+                    {% if question.choice_type == 'text' %}
                         {% for textchoice in question.textchoice_set.all %}
                             <div class="row">
                                 {% if question.question_disp_type.name == '左寄せ' %}
                                     <div class="col text-left choice_text choice_col_pc d-none d-md-block">
-                                        <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
+                                        <div class="card border-white choice_card" id="choice_btn_{{ forloop.counter }}_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto choice_card_body_pc">
                                                 <div class="card-text choice_wrapper" >
                                                     <div class="row">
@@ -41,7 +50,7 @@
                                     </div>
 
                                     <div class="col text-left choice_text choice_col_sp d-md-none d-block">
-                                        <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
+                                        <div class="card border-white choice_card" id="choice_btn_{{ forloop.counter }}_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body">
                                                 <div class="card-text choice_wrapper">
                                                     {{ textchoice.choice_no }}.&nbsp;
@@ -54,7 +63,7 @@
 
                                 {% else %}
                                     <div class="col text-center choice_text choice_col_pc d-none d-md-block">
-                                        <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
+                                        <div class="card border-white choice_card" id="choice_btn_{{ forloop.counter }}_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto choice_card_body_pc">
                                                 <div class="card-text choice_wrapper">
                                                     <div class="row">
@@ -70,7 +79,7 @@
                                     </div>
 
                                     <div class="col text-center choice_text choice_col_sp d-md-none d-block">
-                                        <div class="card border-white choice_card" id="choice_btn_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
+                                        <div class="card border-white choice_card" id="choice_btn_{{ forloop.counter }}_{{ textchoice.choice_no }}" name={{ textchoice.choice_no }}>
                                             <div class="card-body mx-auto">
                                                 <div class="card-text choice_wrapper">{{ textchoice.choice_no }}.&nbsp;
                                                     <span class="textchoice_kanji">{{ textchoice.body | linebreaksbr }}</span>
@@ -82,7 +91,7 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
-                    {% elif question_type == 'img' %}
+                    {% elif question.choice_type == 'img' %}
                         <div class="row">
                             <div class="img_choice_pc_width d-none d-md-block"></div>
                             {% for imagechoice in question.imagechoice_set.all %}
@@ -107,13 +116,26 @@
                     {% endif %}
                     <div class="row">
                         <div class="col text-center">
-                            <button id="decision_btn" type="button" class="btn"><b>けってい</b></button>
+                            <button id="decision_btn_{{ forloop.counter }}" type="button" class="btn decision_btn"><b>けってい</b></button>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col text-center">
-                            <button id="kanji_hiragana_toggle" type="button" class="btn bg-white">ひらがなにする</button>
+                            <button id="kanji_hiragana_toggle_{{ forloop.counter }}" type="button" class="btn bg-white kanji_hiragana_toggle">ひらがなにする</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="button" class="btn bg-white skip">もんだいをスキップ</button>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="skip_error">
+                        <div class="row">
+                            <div class="col text-center">
+                                これいじょう スキップは できないよ
+                            </div>
                         </div>
                     </div>
                 </div>  
@@ -121,6 +143,9 @@
         </div>
     </div>
 </div>
+
+{% endfor %}
+
 {% endblock %}
 
 {% block footer %}
@@ -143,29 +168,59 @@
 </div>
 {% endblock %}
 
-{% block jquery %}
-    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-{% endblock %}
-
 {% block js %}
 <script>
     $(function(){
         var skip_qty = 0;
+        var skip_now = false;
+        var is_kana = false;
 
-        $("#main").on("swiperight",function(){
-            var width = $('.question_card').width();
-            $('#question').removeClass('row');
-            $('.question_card').width(width);
-            $("#main").addClass('rotate-left').delay(700).fadeOut(1);
-            skip_qty++;
+        $(".skip").on("click", function(){
+            var rem_q_qty = 0;
+
+            $("[id^=main_]").each(function(i, o){
+                if($(o).hasClass('skiped') == false){
+                    rem_q_qty++;
+                }
+            });
+
+            console.log("rem_q_qty" + rem_q_qty);
+            console.log("res_cnt" + {{ rem_res_cnt }});
+            if(rem_q_qty <= {{ rem_res_cnt }}){
+                $("#main_" + (skip_qty + 1)).find('.skip_error').fadeIn('slow');
+                return;
+            }
+
+            if(skip_now == false){
+                skip_now = true;
+                var width = $("#main_" + (skip_qty + 1)).find('.question_card').width();
+                $("#main_" + (skip_qty + 1)).find('.question').removeClass('row');
+                $("#main_" + (skip_qty + 1)).find('.question_card').width(width);
+                $("#main_" + (skip_qty + 1)).addClass('rotate-left').delay(700).fadeOut(1,
+                                                                function(){
+                                                                                $("#main_" + (skip_qty + 1)).addClass('skiped');
+
+                                                                                skip_qty++;
+                                                                                skip_now = false;
+                                                                                $("#main_" + (skip_qty + 1)).fadeIn();
+                                                                                if($("#main_" + (skip_qty + 1)).find("[id^=kanji_hiragana_toggle]").text() == "漢字にする"){
+                                                                                    is_kana = true;
+                                                                                }
+                                                                                else if($("#main_" + (skip_qty + 1)).find("[id^=kanji_hiragana_toggle]").text() == "ひらがなにする"){
+                                                                                    is_kana = false;
+                                                                                }
+
+                                                                                
+                                                                            });
+            }
+            
         });
         
-        $("#decision_btn").prop("disabled", true);
-        var default_url = "{% url 'answer_result' category.id 987654321 123456789 question_type 99999 %}"
+        $("[id^=decision_btn]").prop("disabled", true);
+        var default_url = "{% url 'answer_result' category.id 987654321 123456789 'question_type' 99999 %}"
         var next_url = default_url
 
-        $('#decision_btn').click(function() {
+        $("[id^=decision_btn]").click(function() {
             location.href = next_url;
         });
 
@@ -176,7 +231,7 @@
 
             var clicked_btn = $(this)
 
-            $(".choice_card").each(function(i, o){
+            $("#main_" + (skip_qty + 1)).find(".choice_card").each(function(i, o){
                 if ($(o).attr('id') != clicked_btn.attr('id')){
                     $(o).addClass("bg-white");
                     $(o).removeClass("bg-secondary");
@@ -185,59 +240,64 @@
             });
 
             next_url = default_url
-            next_url = next_url.replace("987654321", {{ question.id }});
+            next_url = next_url.replace("987654321", $("#q_id_" + (skip_qty + 1)).text());
             next_url = next_url.replace("123456789", {{ question_no }} + skip_qty);
+            next_url = next_url.replace("question_type", $("#c_type_" + (skip_qty + 1)).text());
             next_url = next_url.replace("99999", $(this).attr('name'));
             console.log(next_url);
 
-            $("#decision_btn").prop("disabled", false);
-            $("#decision_btn").prop("disabled", false);
+            $("#decision_btn_" + (skip_qty + 1)).prop("disabled", false);
+
         });
 
-        var is_kana = true;
+        
 
-        $(document).on('click', '#kanji_hiragana_toggle', function() {
-            $('#kanji_hiragana_toggle').fadeOut(500, function() {
-                if (is_kana){
-                        $('#kanji_hiragana_toggle').text("漢字にする")
+        $(document).on('click', '[id^=kanji_hiragana_toggle]', function() {
+            $(this).fadeOut(500, function() {
+                if(is_kana){
+                    is_kana = false;
                 }
                 else{
-                    $('#kanji_hiragana_toggle').text("ひらがなにする")
+                    is_kana = true;
                 }
-                $('#kanji_hiragana_toggle').fadeIn(500, function() {
-                    if(is_kana){
-                        is_kana = false;
-                    }
-                    else{
-                        is_kana = true;
-                    }
-                });
-            }); 
-
-            $('.question_body').fadeOut(500, function() {
 
                 if (is_kana){
-                    $('.question_body').text("Q:{{ question.body_kana | linebreaksbr }}")
+                    $(this).text("漢字にする")
                 }
                 else{
-                    $('.question_body').text("Q:{{ question.body | linebreaksbr }}")
+                    $(this).text("ひらがなにする")
                 }
-
-                $('.question_body').fadeIn(500, function() {
+                $(this).fadeIn(500, function() {
 
                 });
             }); 
 
-            $(".choice_wrapper").fadeOut(500, function() {
+            $("#main_" + (skip_qty + 1)).find('.question_body_wrapper').fadeOut(500, function() {
+
                 if (is_kana){
-                    $(".textchoice_kanji").hide();
-                    $(".textchoice_kana").show();
+                    $("#main_" + (skip_qty + 1)).find('.question_body').hide();
+                    $("#main_" + (skip_qty + 1)).find('.question_body_kana').show();
+                }
+                else{
+                    $("#main_" + (skip_qty + 1)).find('.question_body').show();
+                    $("#main_" + (skip_qty + 1)).find('.question_body_kana').hide();
+                }
+
+                $("#main_" + (skip_qty + 1)).find('.question_body_wrapper').fadeIn(500, function() {
+
+                });
+            }); 
+
+            $("#main_" + (skip_qty + 1)).find(".choice_wrapper").fadeOut(500, function() {
+                if (is_kana){
+                    $("#main_" + (skip_qty + 1)).find(".textchoice_kanji").hide();
+                    $("#main_" + (skip_qty + 1)).find(".textchoice_kana").show();
                 }
                 else {
-                    $(".textchoice_kanji").show();
-                    $(".textchoice_kana").hide();
+                    $("#main_" + (skip_qty + 1)).find(".textchoice_kanji").show();
+                    $("#main_" + (skip_qty + 1)).find(".textchoice_kana").hide();
                 }
-                $(".choice_wrapper").fadeIn(500, function() {
+                $("#main_" + (skip_qty + 1)).find(".choice_wrapper").fadeIn(500, function() {
                     
                 });
             });
