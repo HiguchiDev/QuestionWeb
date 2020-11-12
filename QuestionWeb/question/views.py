@@ -110,6 +110,7 @@ class QuestionView(TemplateView):
 
         ctx['question_list'] = question_list
         ctx['rem_res_cnt'] = QUESTION_MAX_QTY - self.request.session.get('res_cnt', 0)
+        ctx['res_cnt'] = self.request.session.get('res_cnt', 0)
 
         return ctx
 
