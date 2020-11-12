@@ -129,11 +129,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col text-center">
-                            <button type="button" class="btn bg-white skip">もんだいをスキップ</button>
-                        </div>
-                    </div>
                     <div style="display: none;" class="skip_error">
                         <div class="row">
                             <div class="col text-center">
@@ -175,11 +170,22 @@
 {% block js %}
 <script>
     $(function(){
+        $('img').attr('onmousedown', 'return false');
+        $('img').attr('onselectstart', 'return false');
         var skip_qty = 0;
         var skip_now = false;
         var is_kana = false;
+        var skip_pre = false;
 
-        $(".note").on("click", function(){
+        $(".note").on("mousedown touchstart", function(){
+            skip_pre = true;
+        });
+
+        $(".note").on("mousemove touchmove", function(){
+            if(skip_pre == false){
+                return;
+            }
+
             var rem_q_qty = 0;
 
             $("[id^=main_]").each(function(i, o){
@@ -188,8 +194,6 @@
                 }
             });
 
-            console.log("rem_q_qty" + rem_q_qty);
-            console.log("res_cnt" + {{ rem_res_cnt }});
             if(rem_q_qty <= {{ rem_res_cnt }}){
                 $("#main_" + (skip_qty + 1)).find('.skip_error').fadeIn('slow');
                 return;
@@ -213,6 +217,8 @@
                                                                                 else if($("#main_" + (skip_qty + 1)).find("[id^=kanji_hiragana_toggle]").text() == "ひらがなにする"){
                                                                                     is_kana = false;
                                                                                 }
+
+                                                                                skip_pre = false;
 
                                                                                 
                                                                             });

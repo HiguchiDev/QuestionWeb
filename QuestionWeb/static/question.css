@@ -57,10 +57,6 @@ footer {
     background-color: #0EC0AB;
 }
 
-.skip {
-    margin-top: 25px;
-}
-
 .choice_no_wrapper {
     white-space: nowrap;
 }
@@ -125,4 +121,5 @@ footer {
     margin-top: -63px;
     border-bottom-left-radius: 1rem !important;
     color: #FBFBFB;
+    z-index: 9999;
 }
