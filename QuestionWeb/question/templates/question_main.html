@@ -20,7 +20,9 @@
     <div class="container">
         <div class="row question">
             <div class="card mx-auto border-light question_card">
-                <div class="note"></div>
+                
+                    <img src="{% static "page_skip.png" %}" class="note">
+                
                 <div class="card-body">
                     <div class="row">
                         <div class="col text-center question_body_wrapper">
@@ -177,7 +179,7 @@
         var skip_now = false;
         var is_kana = false;
 
-        $(".skip").on("click", function(){
+        $(".note").on("click", function(){
             var rem_q_qty = 0;
 
             $("[id^=main_]").each(function(i, o){
