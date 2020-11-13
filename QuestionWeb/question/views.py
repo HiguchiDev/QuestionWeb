@@ -212,5 +212,13 @@ class SampleAnswerView(TemplateView):
         return ctx
 
 
-class SandView(TemplateView):
-    template_name = "sand.html"
+class HelpPageView(TemplateView):
+    template_name = "help.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        
+        
+
+        return ctx
+

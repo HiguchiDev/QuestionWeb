@@ -109,3 +109,7 @@ footer {
 *:focus {
     box-shadow:none !important;
 }
+
+#help_link {
+    color: white;
+}
