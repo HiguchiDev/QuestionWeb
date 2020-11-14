@@ -1,11 +1,24 @@
-#top_btn {
-    margin-top: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 55px;
-    padding-right: 55px;
-    border-radius: 1rem !important;
+#body_wrapper {
+    background-color: #EFF6F4;
+}
+
+#expire_main_message {
+    margin-top: 90px;
+}
+
+.p_title {
+    font-size: 24px;
+}
+
+.p_body {
     font-size: 18px;
-    color: #FBFBFB;
-    background-color: #0EC0AB;
+    margin-top: 35px;
+}
+
+.caution {
+    font-size: 13px;
+}
+
+.GoogleAdsence {
+    margin-top: 90px;
 }
