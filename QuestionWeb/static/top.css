@@ -3,6 +3,7 @@
 }
 
 #sample_question {
+    margin-top : 30px;
     margin-bottom : 60px;
 }
 
@@ -11,7 +12,7 @@
 }
 
 #sample_answer {
-    margin-bottom : -15px;
+    margin-bottom : 0px;
 }
 
 .choice_image {
@@ -22,10 +23,15 @@
 }
 
 .pc_bg {
-    background:url(/static/2x_MaskGroup_prod.png) center no-repeat;
+    background: url(/static/PC_sample_bg.png) center no-repeat, linear-gradient(180deg, #D8F8EF 0%, #EFF6F4 100%);
+    background-size: cover;
+    
+}
+
+.sp_bg {
+    background:url(/static/SP_sample_bg.png) center no-repeat, linear-gradient(180deg, #D8F8EF 0%, #EFF6F4 100%);
     background-size: cover;
 }
-.sp_bg { background:url(/static/sp_bg.png) center no-repeat; background-size: cover;}
 
 
 
@@ -60,7 +66,7 @@
 /* 文字を中央に揃える */
 .card-img-overlay{
     padding: 0;
-    top: calc(50% - 0.75rem);
+    top: calc(50% - 1rem);
     text-align: center;
     font-weight: bold;
   }

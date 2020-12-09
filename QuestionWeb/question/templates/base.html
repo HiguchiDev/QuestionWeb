@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link href="{% static 'question_base.css' %}" rel="stylesheet">
   <title>{% block meta_title %}{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static "favion.ico" %}" type="image/vnd.microsoft.icon">
   {% block css %}
   {% endblock %}
   
@@ -78,9 +79,10 @@
         </div>
         <div class="col-2"></div>
       </div>
-
+      <div class="sp_footer_margin d-md-none d-block"></div>
       <div class="col-4 footer_sub_text1">
-        >機能・問題のリクエスト<br>
+        
+        <a href="https://forms.gle/bM7tazVvanw3VWtAA"><span id="request_link">>機能・問題のリクエスト</span></a><br>
         <div class="row">
           <div class="col-12">
             <div class="float-left footer_sub_text2">
