@@ -17,3 +17,13 @@
     margin-top: 20px;
     padding-bottom: 20px;
 }
+
+.stop_sub_messages {
+    margin-bottom: -15px;
+}
+
+#twitter_share_text {
+    margin-top: 20px;
+    margin-bottom: -10px;
+    font-size: 14px;
+}

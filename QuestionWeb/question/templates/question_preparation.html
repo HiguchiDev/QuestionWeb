@@ -3,7 +3,7 @@
 
 {% load static %}
 {% block css %}
-<link href="{% static 'question_stop.css' %}" rel="stylesheet">
+<link href="{% static 'question_preparation.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -17,6 +17,11 @@
         <div class="row">
             <div class="col text-center" id="stop_sub_message">
                 <p>他の問題をお楽しみください。</p>
+            </div>
+        </div>
+        <div class="row" id="home_link_row">
+            <div class="col text-center">
+                <a id="home_link" href="{% url 'top' %}">> ホームに戻る</a>
             </div>
         </div>
     </div>
